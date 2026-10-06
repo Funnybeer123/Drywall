@@ -135,6 +135,18 @@ As crews are added, raise **Settings → Scheduling → jobs at once** so the pu
 
 ---
 
+## Home page video
+
+The home page header crossfades between four close-up clips stored in `public/videos/`. Clip order, labels, crop position, speed (`PLAYBACK_RATE`) and how long each clip shows (`SEGMENT_MS`) are set at the top of `src/app/(site)/_components/hero-video.tsx`.
+
+- **Footage:** Tima Miroshnichenko on [Pexels](https://www.pexels.com/@tima-miroshnichenko/). The Pexels license is free for commercial use and doesn't require credit. Once Willie has his own close-ups, drop them in `public/videos/` and update `CLIPS`.
+- **Smoothness:**
+  - Clips are 25 fps and play at 0.8× speed. Going much slower makes them look choppy.
+  - For true slow motion, re-encode with frame interpolation (needs [ffmpeg](https://ffmpeg.org)):
+    `ffmpeg -i in.mp4 -an -vf "setpts=2*PTS,minterpolate=fps=50:mi_mode=mci:mc_mode=aobmc:vsbmc=1" -c:v libx264 -crf 22 -preset slow -movflags +faststart out.mp4`
+  - Then set `PLAYBACK_RATE` to 1.
+- **Page weight:** one full rotation loads about 37 MB. Only the clip on screen (plus the next one) is fetched. Playback pauses when the tab is hidden or the visitor scrolls away. People with "reduce motion" or data-saver turned on get a still frame.
+
 ## Tech notes (for whoever maintains this)
 
 - Next.js 16 (App Router), React 19, Tailwind CSS 4, Drizzle ORM. Production uses Postgres (Neon); local development uses embedded PGlite.

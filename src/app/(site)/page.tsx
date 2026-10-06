@@ -9,6 +9,7 @@ import { getGallery, getNextAvailable, getRating, getServiceAreas, getServices, 
 import { friendlyDate } from './_lib/format'
 import { ServiceIcon } from './_components/icons'
 import { BeforeAfter } from './_components/before-after'
+import { HeroVideo } from './_components/hero-video'
 import { AreaChips, CtaBand, ProcessSteps, SectionHeading, TestimonialCard } from './_components/sections'
 
 export const dynamic = 'force-dynamic'
@@ -35,33 +36,45 @@ export default async function HomePage() {
 
   const featured = gallery.filter((g) => g.featured).slice(0, 6)
   const work = featured.length ? featured : gallery.slice(0, 6)
-  const heroImage = work.find((g) => !g.beforeImageUrl) ?? work[0]
   const featuredReviews = testimonials.filter((t) => t.featured)
   const reviews = (featuredReviews.length ? featuredReviews : testimonials).slice(0, 3)
 
   return (
     <>
-      {/* ---------- Hero ---------- */}
-      <section className="bg-drywall hero-has-media relative overflow-hidden border-b border-slate-200">
-        <div className="container-x grid items-center gap-12 py-12 sm:py-16 lg:grid-cols-[1.1fr_1fr] lg:gap-16 lg:py-24">
-          <div>
+      {/* ---------- Hero: rotating slow-motion close-ups ---------- */}
+      <section className="relative isolate overflow-hidden border-b border-slate-900 bg-slate-950 text-white">
+        <HeroVideo />
+        <div className="container-x relative flex min-h-[640px] flex-col justify-center py-20 sm:min-h-[680px] sm:py-24 lg:min-h-[760px] lg:py-28">
+          <div className="max-w-2xl">
+            {rating.count > 0 ? (
+              <Link
+                href="/reviews"
+                className="mb-6 inline-flex items-center gap-2 rounded-full bg-white/10 px-3.5 py-1.5 text-sm font-medium text-white ring-1 ring-white/20 backdrop-blur-sm transition-colors hover:bg-white/15"
+              >
+                <Star className="size-4 fill-amber-400 text-amber-400" aria-hidden="true" />
+                {rating.average.toFixed(1)} from {rating.count} review{rating.count === 1 ? '' : 's'}
+              </Link>
+            ) : null}
             <p className="eyebrow">
               Drywall contractor · {s.city}, {s.state}
             </p>
-            <h1 className="mt-4 text-[2.5rem] leading-[1.05] font-bold tracking-tight text-balance text-slate-900 sm:text-5xl lg:text-6xl">
+            <h1 className="mt-4 text-[2.5rem] leading-[1.05] font-bold tracking-tight text-balance text-white sm:text-5xl lg:text-6xl">
               {s.heroHeadline}
             </h1>
-            <p className="mt-6 max-w-xl text-lg leading-relaxed text-pretty text-slate-600">{s.heroSubhead}</p>
+            <p className="mt-6 max-w-xl text-lg leading-relaxed text-pretty text-slate-200">{s.heroSubhead}</p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link href="/quote" className={buttonClass('primary', 'lg')}>
                 Get a free quote <ArrowRight className="size-4" aria-hidden="true" />
               </Link>
-              <a href={telHref(s.phone)} className={buttonClass('secondary', 'lg')}>
+              <a
+                href={telHref(s.phone)}
+                className={buttonClass('secondary', 'lg', 'bg-white/10 text-white ring-white/30 backdrop-blur-sm hover:bg-white/20')}
+              >
                 <Phone className="size-4" aria-hidden="true" /> {formatPhone(s.phone)}
               </a>
             </div>
 
-            <ul className="mt-10 grid grid-cols-2 gap-x-6 gap-y-5 border-t border-slate-200 pt-8 sm:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
+            <ul className="mt-10 grid grid-cols-2 gap-x-6 gap-y-5 border-t border-white/15 pt-8 sm:grid-cols-4">
               <TrustItem icon={<Award className="size-5" />} value={`${s.yearsInBusiness}+ yrs`} label="In business" />
               {s.insured ? (
                 <TrustItem icon={<ShieldCheck className="size-5" />} value="Licensed" label="& fully insured" />
@@ -81,37 +94,6 @@ export default async function HomePage() {
               />
             </ul>
           </div>
-
-          {heroImage ? (
-            <div className="relative mx-auto w-full max-w-xl lg:max-w-none">
-              <div className="overflow-hidden rounded-3xl bg-slate-200 shadow-2xl shadow-slate-900/15 ring-1 ring-slate-900/5">
-                <img
-                  src={heroImage.imageUrl}
-                  alt={heroImage.title}
-                  className="aspect-[4/3] w-full object-cover lg:aspect-[5/6]"
-                  fetchPriority="high"
-                />
-              </div>
-              <Link
-                href="/availability"
-                className="absolute -bottom-6 left-4 flex items-center gap-3 rounded-2xl bg-white p-4 pr-5 shadow-xl ring-1 ring-slate-200 transition-transform hover:-translate-y-0.5 sm:-left-6"
-              >
-                <span className="grid size-11 place-items-center rounded-xl bg-brand-soft text-brand">
-                  <CalendarCheck className="size-5" aria-hidden="true" />
-                </span>
-                <span>
-                  <span className="block text-xs font-medium text-slate-500">Next available start</span>
-                  <span className="block text-base font-bold text-slate-900">{next ? friendlyDate(next) : 'Call for dates'}</span>
-                </span>
-              </Link>
-              {rating.count > 0 ? (
-                <div className="absolute -top-4 right-4 hidden items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-semibold text-slate-900 shadow-lg ring-1 ring-slate-200 sm:flex">
-                  <Star className="size-4 fill-amber-400 text-amber-400" aria-hidden="true" />
-                  {rating.average.toFixed(1)} from {rating.count} reviews
-                </div>
-              ) : null}
-            </div>
-          ) : null}
         </div>
       </section>
 
@@ -272,8 +254,8 @@ function TrustItem({
         {icon}
       </span>
       <span>
-        <span className="block text-base font-bold text-slate-900">{value}</span>
-        <span className="block text-sm text-slate-500">{label}</span>
+        <span className="block text-base font-bold text-white">{value}</span>
+        <span className="block text-sm text-slate-300">{label}</span>
       </span>
     </span>
   )
