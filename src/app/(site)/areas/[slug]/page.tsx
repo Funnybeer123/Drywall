@@ -122,7 +122,7 @@ export default async function AreaPage({ params }: Props) {
         }}
       />
 
-      <section className="bg-drywall border-b border-slate-200">
+      <section className="bg-drywall hero-has-media border-b border-slate-200">
         <div className="container-x grid items-center gap-10 py-14 sm:py-20 lg:grid-cols-[1.2fr_1fr]">
           <div>
             <p className="eyebrow inline-flex items-center gap-1.5">

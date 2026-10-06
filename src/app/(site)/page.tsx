@@ -42,7 +42,7 @@ export default async function HomePage() {
   return (
     <>
       {/* ---------- Hero ---------- */}
-      <section className="bg-drywall relative overflow-hidden border-b border-slate-200">
+      <section className="bg-drywall hero-has-media relative overflow-hidden border-b border-slate-200">
         <div className="container-x grid items-center gap-12 py-12 sm:py-16 lg:grid-cols-[1.1fr_1fr] lg:gap-16 lg:py-24">
           <div>
             <p className="eyebrow">

@@ -37,13 +37,44 @@ body {
   .table-base tbody tr:hover {
     @apply bg-slate-50/70;
   }
-  /* Subtle drywall-sheet texture used behind hero sections. */
+  /* Header background: soft abstract art of a finisher on stilts skimming a wall.
+     Two layers — the figure (public/hero-figure.svg) and a sweeping skim-coat wash
+     (public/hero-wash.svg). Phones get the wash only so text stays easy to read. */
   .bg-drywall {
-    background-color: #f8fafc;
-    background-image:
-      linear-gradient(to right, rgb(15 23 42 / 0.045) 1px, transparent 1px),
-      linear-gradient(to bottom, rgb(15 23 42 / 0.045) 1px, transparent 1px);
-    background-size: 96px 192px;
+    background-color: #f7f5f1;
+    background-image: url('/hero-wash.svg');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+  }
+  @media (min-width: 1024px) {
+    /* Text-only headers: the figure stands at the right edge of the content area. */
+    .bg-drywall {
+      background-image: url('/hero-figure.svg'), url('/hero-wash.svg');
+      background-position:
+        right max(1rem, calc((100vw - 72rem) / 2)) bottom 0,
+        0 0;
+      background-size:
+        auto min(92%, 520px),
+        100% 100%;
+    }
+    /* Headers with a photo on the right: the figure moves into the page margin,
+       and only appears once the screen is wide enough to fit him beside the photo. */
+    .bg-drywall.hero-has-media {
+      background-image: url('/hero-wash.svg');
+      background-position: 0 0;
+      background-size: 100% 100%;
+    }
+  }
+  @media (min-width: 1600px) {
+    .bg-drywall.hero-has-media {
+      background-image: url('/hero-figure.svg'), url('/hero-wash.svg');
+      background-position:
+        right max(0rem, calc((100vw - 72rem) / 2 - 22rem)) bottom 0,
+        0 0;
+      background-size:
+        auto min(80%, 560px),
+        100% 100%;
+    }
   }
 }
 

@@ -33,7 +33,7 @@ export default async function AboutPage() {
 
   return (
     <>
-      <section className="bg-drywall border-b border-slate-200">
+      <section className="bg-drywall hero-has-media border-b border-slate-200">
         <div className="container-x grid items-center gap-12 py-14 sm:py-20 lg:grid-cols-2">
           <div>
             <p className="eyebrow">About us</p>
