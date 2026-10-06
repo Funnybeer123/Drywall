@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800">
+<defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f5f5f4"/><stop offset="1" stop-color="#e7e5e4"/></linearGradient>
+<linearGradient id="f" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a16207" stop-opacity=".25"/><stop offset="1" stop-color="#713f12" stop-opacity=".35"/></linearGradient></defs>
+<rect width="1200" height="800" fill="url(#g)"/><line x1="200" y1="0" x2="200" y2="560" stroke="#0f172a" stroke-opacity=".05" stroke-width="2"/><line x1="400" y1="0" x2="400" y2="560" stroke="#0f172a" stroke-opacity=".05" stroke-width="2"/><line x1="600" y1="0" x2="600" y2="560" stroke="#0f172a" stroke-opacity=".05" stroke-width="2"/><line x1="800" y1="0" x2="800" y2="560" stroke="#0f172a" stroke-opacity=".05" stroke-width="2"/><line x1="1000" y1="0" x2="1000" y2="560" stroke="#0f172a" stroke-opacity=".05" stroke-width="2"/>
+<rect y="560" width="1200" height="240" fill="url(#f)"/><rect y="556" width="1200" height="10" fill="#fff" fill-opacity=".9"/>
+<rect x="760" y="140" width="300" height="300" fill="#fff" fill-opacity=".5" stroke="#fff" stroke-width="10"/>
+<text x="40" y="760" font-family="Helvetica, Arial, sans-serif" font-size="30" font-weight="700" fill="#0f172a" fill-opacity=".55">Water damage — after</text>
+<text x="40" y="60" font-family="Helvetica, Arial, sans-serif" font-size="20" fill="#0f172a" fill-opacity=".35">SAMPLE PHOTO — replace in Admin → Website content</text>
+</svg>
