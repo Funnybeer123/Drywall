@@ -1,10 +1,12 @@
 'use client'
 
-import { useActionState, useEffect, useRef, type ReactNode } from 'react'
+import { createContext, startTransition, use, useActionState, useEffect, useRef, type ReactNode } from 'react'
 import { useFormStatus } from 'react-dom'
 import { Button } from './ui'
 import type { ActionState } from '@/lib/action-state'
 import { cn } from '@/lib/utils'
+
+const PendingContext = createContext(false)
 
 export function SubmitButton({
   children,
@@ -23,7 +25,8 @@ export function SubmitButton({
   name?: string
   value?: string
 }) {
-  const { pending } = useFormStatus()
+  const status = useFormStatus()
+  const pending = status.pending || use(PendingContext)
   return (
     <Button type="submit" disabled={pending} variant={variant} size={size} className={className} name={name} value={value}>
       {pending ? pendingText : children}
@@ -49,15 +52,26 @@ export function ActionForm({
   resetOnSuccess?: boolean
   encType?: 'multipart/form-data'
 }) {
-  const [state, formAction] = useActionState(action, {})
+  const [state, formAction, isPending] = useActionState(action, {})
   const ref = useRef<HTMLFormElement>(null)
   useEffect(() => {
     if (state.ok && resetOnSuccess) ref.current?.reset()
   }, [state, resetOnSuccess])
 
+  // Submitting via onSubmit (instead of the `action` prop) stops React from
+  // auto-resetting the form, so a validation error doesn't wipe what was typed.
   return (
-    <form ref={ref} action={formAction} className={className} encType={encType}>
-      {children}
+    <form
+      ref={ref}
+      className={className}
+      encType={encType}
+      onSubmit={(e) => {
+        e.preventDefault()
+        const fd = new FormData(e.currentTarget, (e.nativeEvent as SubmitEvent).submitter)
+        startTransition(() => formAction(fd))
+      }}
+    >
+      <PendingContext value={isPending}>{children}</PendingContext>
       <FormMessage state={state} />
     </form>
   )
