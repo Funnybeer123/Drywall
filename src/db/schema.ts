@@ -77,9 +77,9 @@ export const invites = pgTable('invites', {
 // Single-row business settings (id = 1). Everything brand-related lives here.
 export const settings = pgTable('settings', {
   id: integer('id').primaryKey().default(1),
-  businessName: text('business_name').notNull().default("Willie's Drywall"),
+  businessName: text('business_name').notNull().default("Willy's Drywall"),
   tagline: text('tagline').notNull().default('Smooth walls. Straight lines. Done right.'),
-  ownerName: text('owner_name').notNull().default('Willie'),
+  ownerName: text('owner_name').notNull().default('Willy'),
   phone: text('phone').notNull().default('(555) 555-0123'),
   email: text('email').notNull().default('hello@example.com'),
   address: text('address').notNull().default(''),

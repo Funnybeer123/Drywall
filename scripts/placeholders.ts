@@ -1,5 +1,5 @@
 // Generates simple SVG placeholder photos for the demo gallery (public/placeholder/).
-// Willie replaces these with real job photos from Admin → Website content.
+// Willy replaces these with real job photos from Admin → Website content.
 import { mkdirSync, writeFileSync } from 'node:fs'
 
 export const PLACEHOLDERS = [

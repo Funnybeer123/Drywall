@@ -1,5 +1,5 @@
 // Starter website content shared by the demo seed and the production setup script.
-// Prices are examples — Willie should set his own in Admin → Price list.
+// Prices are examples — Willy should set his own in Admin → Price list.
 
 export const SERVICES = [
   { slug: 'hang-and-finish', name: 'Hang & Finish', icon: 'layers', sort: 1, summary: 'New construction, additions and remodels — hung tight, taped and finished smooth.', body: 'From a single room to a whole house, we hang, tape, mud and sand to a paint-ready finish. Level 4 standard; Level 5 available for critical lighting.' },

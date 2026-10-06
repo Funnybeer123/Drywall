@@ -47,7 +47,7 @@ export async function acceptEstimate(token: string, _: ActionState, fd: FormData
     const projectId = await createProjectFromEstimate(accepted)
     if (est.leadId) await db.update(leads).set({ status: 'won' }).where(eq(leads.id, est.leadId))
 
-    // Let Willie know right away. Email/SMS helpers never throw.
+    // Let Willy know right away. Email/SMS helpers never throw.
     const [customer] = await db.select().from(customers).where(eq(customers.id, est.customerId))
     const s = await getSettings()
     const adminLink = appUrl(`/admin/estimates/${est.id}`)

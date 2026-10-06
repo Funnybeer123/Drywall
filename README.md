@@ -1,8 +1,8 @@
-# Willie's Drywall — Website & Business Dashboard
+# Willy's Drywall — Website & Business Dashboard
 
 One app with two halves:
 
-- **Public website.** Services, a portfolio with before/after photos, customer reviews, a live availability calendar, a request-a-quote form that emails and texts Willie, and local SEO pages for each town he serves.
+- **Public website.** Services, a portfolio with before/after photos, customer reviews, a live availability calendar, a request-a-quote form that emails and texts Willy, and local SEO pages for each town he serves.
 - **Team dashboard** (`/admin`). Leads, estimates customers accept online, jobs, schedule, invoices customers pay online, expenses with receipt photos, profit per job, reports, team accounts (owner / manager / crew), and website content editing.
 
 The business name, colors, phone number and everything else are set in **Admin → Settings**. Nothing is hard-coded, so renaming the business later is one change.
@@ -23,7 +23,7 @@ Sign in at <http://localhost:3000/login>:
 
 | Role | Email | Password |
 |---|---|---|
-| Owner | willie@example.com | drywall-demo-1 |
+| Owner | willy@example.com | drywall-demo-1 |
 | Manager | maria@example.com | drywall-demo-1 |
 | Crew member | tyler@example.com | drywall-demo-1 |
 
@@ -49,7 +49,7 @@ The dashboard has a **Launch checklist** under **Admin → Website content**. In
 1. **Settings.** Set the real business name, phone, email, license #, city, logo and accent color, and where quote alerts go.
 2. **Delete the sample reviews.** Only publish real reviews from real customers.
 3. **Replace the sample gallery photos** with real before/after job photos.
-4. **Service areas.** List the real towns Willie serves. Each one becomes its own Google-friendly page.
+4. **Service areas.** List the real towns Willy serves. Each one becomes its own Google-friendly page.
 5. **Price list.** Set real prices so estimates are quick to build.
 6. **Google review link.** Paste it in Settings so the automatic review requests point to Google.
 
@@ -67,7 +67,7 @@ Every service below has a free tier that's enough to start.
 | [Resend](https://resend.com) | Sends email | Free up to 3,000/mo |
 | [Twilio](https://twilio.com) | Sends texts | About $1.15/mo per number + ~$0.01/text, plus one-time registration fees |
 | [Stripe](https://stripe.com) | Online invoice payments | 2.9% + 30¢ per card payment; 0.8% for bank (ACH), capped at $5 |
-| A domain (e.g. Cloudflare, Namecheap) | `williesdrywall.com` | ~$10–15/yr |
+| A domain (e.g. Cloudflare, Namecheap) | `willysdrywall.com` | ~$10–15/yr |
 
 ### Steps
 
@@ -82,12 +82,12 @@ Every service below has a free tier that's enough to start.
 
    Deploy. Database tables are created automatically on each deploy.
 4. **Storage.** In Vercel → Storage, create a **Blob** store and connect it to the project. This adds `BLOB_READ_WRITE_TOKEN` for photo uploads.
-5. **Create Willie's login.** On your computer, put the Neon `DATABASE_URL` in a `.env.local` file, then run:
+5. **Create Willy's login.** On your computer, put the Neon `DATABASE_URL` in a `.env.local` file, then run:
    ```bash
    npm run create-owner
    ```
    This creates his owner account plus the starter services, FAQ and price list, with no demo data. Then remove `DATABASE_URL` from `.env.local` again so local development keeps using the local database.
-6. **Email (Resend).** Add and verify the domain, then set `RESEND_API_KEY` and `EMAIL_FROM` (e.g. `Willie's Drywall <hello@williesdrywall.com>`).
+6. **Email (Resend).** Add and verify the domain, then set `RESEND_API_KEY` and `EMAIL_FROM` (e.g. `Willy's Drywall <hello@willysdrywall.com>`).
 7. **Texts (Twilio).** Buy a local number. Then set `TWILIO_ACCOUNT_SID`, `TWILIO_AUTH_TOKEN` and `TWILIO_FROM_NUMBER`.
    > ⚠️ **Start this early.** US carriers require **A2P 10DLC registration** (brand + campaign) before business texts are delivered. Approval can take from a few days to a few weeks. Until then, quote alerts still arrive by email.
 8. **Payments (Stripe).**
@@ -139,7 +139,7 @@ As crews are added, raise **Settings → Scheduling → jobs at once** so the pu
 
 The home page header crossfades between four close-up clips stored in `public/videos/`. Clip order, labels, crop position, speed (`PLAYBACK_RATE`) and how long each clip shows (`SEGMENT_MS`) are set at the top of `src/app/(site)/_components/hero-video.tsx`.
 
-- **Footage:** Tima Miroshnichenko on [Pexels](https://www.pexels.com/@tima-miroshnichenko/). The Pexels license is free for commercial use and doesn't require credit. Once Willie has his own close-ups, drop them in `public/videos/` and update `CLIPS`.
+- **Footage:** Tima Miroshnichenko on [Pexels](https://www.pexels.com/@tima-miroshnichenko/). The Pexels license is free for commercial use and doesn't require credit. Once Willy has his own close-ups, drop them in `public/videos/` and update `CLIPS`.
 - **Smoothness:**
   - Clips are 25 fps and play at 0.8× speed. Going much slower makes them look choppy.
   - For true slow motion, re-encode with frame interpolation (needs [ffmpeg](https://ffmpeg.org)):

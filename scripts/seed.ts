@@ -1,10 +1,10 @@
 /**
  * Demo data so the site and dashboard look alive on first run.
- * Everything here is SAMPLE content — Willie should replace testimonials,
+ * Everything here is SAMPLE content — Willy should replace testimonials,
  * gallery photos and service areas with real ones before launch.
  *
  * Demo logins (local development only):
- *   owner    willie@example.com   / drywall-demo-1
+ *   owner    willy@example.com   / drywall-demo-1
  *   manager  maria@example.com    / drywall-demo-1
  *   crew     tyler@example.com    / drywall-demo-1
  */
@@ -34,8 +34,8 @@ const hash = await bcrypt.hash(password, 11)
 
 await db.insert(s.settings).values({
   id: 1,
-  businessName: "Willie's Drywall",
-  ownerName: 'Willie',
+  businessName: "Willy's Drywall",
+  ownerName: 'Willy',
   phone: '(555) 555-0123',
   email: 'hello@example.com',
   city: 'Springfield',
@@ -45,14 +45,14 @@ await db.insert(s.settings).values({
   taxRateBps: 0,
   aboutText:
     "I've been hanging and finishing drywall for over a decade. I started out on commercial crews, learned the trade from old-school finishers, and opened my own company so I could give homeowners the same level of craftsmanship with honest pricing and clear communication. I show up when I say I will, protect your home like it's mine, and don't leave until the walls are perfect.",
-  notifyEmail: 'willie@example.com',
+  notifyEmail: 'willy@example.com',
   notifyPhone: '(555) 555-0123',
 }).onConflictDoNothing()
 
-const [willie, maria, tyler] = await db
+const [willy, maria, tyler] = await db
   .insert(s.users)
   .values([
-    { name: 'Willie', email: 'willie@example.com', passwordHash: hash, role: 'owner', phone: '(555) 555-0123', payRateCents: 0 },
+    { name: 'Willy', email: 'willy@example.com', passwordHash: hash, role: 'owner', phone: '(555) 555-0123', payRateCents: 0 },
     { name: 'Maria Lopez', email: 'maria@example.com', passwordHash: hash, role: 'manager', phone: '(555) 555-0144', payRateCents: 3200 },
     { name: 'Tyler Brooks', email: 'tyler@example.com', passwordHash: hash, role: 'employee', phone: '(555) 555-0177', payRateCents: 2400 },
   ])
@@ -72,7 +72,7 @@ await db.insert(s.galleryItems).values([
 ])
 
 await db.insert(s.testimonials).values([
-  { customerName: 'Sample — Jennifer R.', location: 'Springfield', rating: 5, projectType: 'Basement finish', featured: true, sort: 1, quote: '(Sample review) Willie finished our basement and the walls are flawless. He showed up every day on time and cleaned up after himself.' },
+  { customerName: 'Sample — Jennifer R.', location: 'Springfield', rating: 5, projectType: 'Basement finish', featured: true, sort: 1, quote: '(Sample review) Willy finished our basement and the walls are flawless. He showed up every day on time and cleaned up after himself.' },
   { customerName: 'Sample — Mark T.', location: 'Chatham', rating: 5, projectType: 'Water damage repair', featured: true, sort: 2, quote: '(Sample review) After our upstairs bathroom leaked, he had the ceiling cut out, replaced and textured in two days. You can’t even tell.' },
   { customerName: 'Sample — Danielle K.', location: 'Rochester', rating: 5, projectType: 'Popcorn removal', featured: true, sort: 3, quote: '(Sample review) Popcorn ceilings gone in the whole house. Fair price, zero mess, and the smooth finish looks amazing.' },
   { customerName: 'Sample — Hartman Builders', location: 'Springfield', rating: 5, projectType: 'New construction', sort: 4, quote: '(Sample review) Our go-to drywall sub. Reliable schedule, clean lines, and no punch-list surprises.' },
@@ -162,7 +162,7 @@ async function invoice(opts: {
     .returning()
   await db.insert(s.invoiceItems).values(opts.items.map((it, i) => ({ ...it, invoiceId: inv.id, sort: i })))
   if (opts.paid === 'full') {
-    await db.insert(s.payments).values({ invoiceId: inv.id, amountCents: totals.totalCents, method: 'check', reference: 'Check #1042', recordedBy: willie.id })
+    await db.insert(s.payments).values({ invoiceId: inv.id, amountCents: totals.totalCents, method: 'check', reference: 'Check #1042', recordedBy: willy.id })
   }
 }
 
@@ -189,21 +189,21 @@ const [demoEstimate] = await db
 await db.insert(s.estimateItems).values(estItems.map((it) => ({ ...it, estimateId: demoEstimate.id })))
 
 await db.insert(s.expenses).values([
-  { projectId: pDone.id, date: addDays(today, -41), category: 'drywall_sheets', vendor: 'Menards', description: '96 sheets 1/2" 4x8', amountCents: 158400, createdBy: willie.id },
-  { projectId: pDone.id, date: addDays(today, -41), category: 'joint_compound', vendor: 'Menards', description: '12 boxes all-purpose, 6 bags Easy Sand 45', amountCents: 31200, createdBy: willie.id },
-  { projectId: pDone.id, date: addDays(today, -40), category: 'tape_bead', vendor: 'Menards', description: 'Paper tape, corner bead, screws', amountCents: 14800, createdBy: willie.id },
-  { projectId: pDone.id, date: addDays(today, -31), category: 'dump_disposal', vendor: 'City transfer station', description: 'Scrap disposal', amountCents: 6500, createdBy: willie.id },
+  { projectId: pDone.id, date: addDays(today, -41), category: 'drywall_sheets', vendor: 'Menards', description: '96 sheets 1/2" 4x8', amountCents: 158400, createdBy: willy.id },
+  { projectId: pDone.id, date: addDays(today, -41), category: 'joint_compound', vendor: 'Menards', description: '12 boxes all-purpose, 6 bags Easy Sand 45', amountCents: 31200, createdBy: willy.id },
+  { projectId: pDone.id, date: addDays(today, -40), category: 'tape_bead', vendor: 'Menards', description: 'Paper tape, corner bead, screws', amountCents: 14800, createdBy: willy.id },
+  { projectId: pDone.id, date: addDays(today, -31), category: 'dump_disposal', vendor: 'City transfer station', description: 'Scrap disposal', amountCents: 6500, createdBy: willy.id },
   { projectId: pActive.id, date: addDays(today, -1), category: 'drywall_sheets', vendor: 'Home Depot', description: '6 sheets 1/2" moisture-resistant', amountCents: 11400, createdBy: tyler.id },
-  { projectId: null, date: addDays(today, -15), category: 'tools', vendor: 'Amazon', description: 'New 12" mud pan & knives', amountCents: 8900, createdBy: willie.id },
-  { projectId: null, date: addDays(today, -10), category: 'fuel_mileage', vendor: 'Shell', description: 'Truck fuel', amountCents: 7200, createdBy: willie.id },
+  { projectId: null, date: addDays(today, -15), category: 'tools', vendor: 'Amazon', description: 'New 12" mud pan & knives', amountCents: 8900, createdBy: willy.id },
+  { projectId: null, date: addDays(today, -10), category: 'fuel_mileage', vendor: 'Shell', description: 'Truck fuel', amountCents: 7200, createdBy: willy.id },
 ])
 
 await db.insert(s.laborEntries).values([
-  { projectId: pDone.id, userId: tyler.id, workerName: 'Tyler Brooks', date: addDays(today, -38), hours: 32, rateCents: 2400, createdBy: willie.id },
-  { projectId: pDone.id, userId: maria.id, workerName: 'Maria Lopez', date: addDays(today, -35), hours: 12, rateCents: 3200, createdBy: willie.id },
+  { projectId: pDone.id, userId: tyler.id, workerName: 'Tyler Brooks', date: addDays(today, -38), hours: 32, rateCents: 2400, createdBy: willy.id },
+  { projectId: pDone.id, userId: maria.id, workerName: 'Maria Lopez', date: addDays(today, -35), hours: 12, rateCents: 3200, createdBy: willy.id },
 ])
 
 await db.insert(s.reviewRequests).values({ projectId: pDone.id, customerId: cust[0].id, dueAt: new Date(Date.now() - 29 * 864e5), sentAt: new Date(Date.now() - 29 * 864e5), status: 'sent' })
 
-console.log(`✔ Seeded demo data. Sign in at /login with willie@example.com / ${password}`)
+console.log(`✔ Seeded demo data. Sign in at /login with willy@example.com / ${password}`)
 process.exit(0)

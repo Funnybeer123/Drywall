@@ -47,7 +47,7 @@ export function ExpenseFields({
         <Field
           label="Job"
           htmlFor="projectId"
-          hint={!allowOverhead && projects.length === 0 ? 'You’re not assigned to any jobs yet — ask Willie to add you.' : undefined}
+          hint={!allowOverhead && projects.length === 0 ? 'You’re not assigned to any jobs yet — ask the owner to add you.' : undefined}
         >
           <Select id="projectId" name="projectId" defaultValue={defaults.projectId ? String(defaults.projectId) : ''} required={!allowOverhead}>
             {allowOverhead ? <option value="">Overhead / not tied to a job</option> : <option value="">Choose a job…</option>}

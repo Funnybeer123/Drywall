@@ -70,7 +70,7 @@ async function handlePaidSession(session: Stripe.Checkout.Session) {
     reference: paymentIntentId,
   })
 
-  // Duplicate deliveries of the same event shouldn't text Willie twice.
+  // Duplicate deliveries of the same event shouldn't text Willy twice.
   if (!already) after(() => notifyOwner(invoiceId, amountCents))
 }
 

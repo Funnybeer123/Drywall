@@ -1,5 +1,5 @@
 /**
- * Production setup: creates Willie's real owner login and the starter website
+ * Production setup: creates Willy's real owner login and the starter website
  * content (services, FAQ, price list) — with NO demo customers or sample reviews.
  *
  *   npm run create-owner
@@ -20,7 +20,7 @@ const { eq } = await import('drizzle-orm')
 const rl = createInterface({ input: stdin, output: stdout })
 console.log(`Database: ${process.env.DATABASE_URL ? 'DATABASE_URL (production Postgres)' : 'local embedded database'}\n`)
 
-const name = (await rl.question('Owner name: ')).trim() || 'Willie'
+const name = (await rl.question('Owner name: ')).trim() || 'Willy'
 const email = (await rl.question('Owner email (used to sign in): ')).trim().toLowerCase()
 const password = await rl.question('Password (min 10 characters): ')
 rl.close()
