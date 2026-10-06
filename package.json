@@ -16,7 +16,8 @@
     "db:seed": "tsx scripts/seed.ts",
     "db:reset": "tsx scripts/reset.ts",
     "setup": "npm run db:migrate && npm run db:seed",
-    "create-owner": "tsx scripts/create-owner.ts"
+    "create-owner": "tsx scripts/create-owner.ts",
+    "assistant": "tsx scripts/grok-assistant.ts"
   },
   "dependencies": {
     "@electric-sql/pglite": "^0.5.8",

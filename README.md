@@ -135,6 +135,33 @@ As crews are added, raise **Settings → Scheduling → jobs at once** so the pu
 
 ---
 
+## AI assistant API (Grok)
+
+An API lets an AI assistant run the business for Willy: log leads and expenses, build estimates and invoices, schedule jobs, record payments, update the website and pull reports.
+
+1. **Create a key.** Go to **Admin → Settings → API & assistant** and choose what the key can do:
+   - `read`: look things up.
+   - `write`: enter and update records.
+   - `content`: edit the website.
+   - `send`: email or text customers.
+   - `settings`: change business settings.
+
+   Leave `send` and `settings` off unless you really want the bot doing those.
+2. **Connect the bot.** Use whichever fits how the bot is built:
+   - **Function calling (xAI API):** `GET /api/v1/tools` returns ready-made tool definitions. Pass them to Grok, then send each tool call to `POST /api/v1/tools/call` with `{ "name": "...", "arguments": {...} }`.
+   - **OpenAPI:** import `/api/v1/openapi.json`.
+   - **Plain REST:** every operation also has its own endpoint (see the spec), using the header `Authorization: Bearer <key>`.
+3. **Try it in the terminal.** Set `XAI_API_KEY`, `SITE_API_KEY` and `SITE_URL` in `.env.local`, then run `npm run assistant`.
+   - Type `/attach receipt.jpg` to add a photo. Grok reads it (vendor, total) and can log it as an expense with the receipt attached.
+
+**Safety rules built in:**
+- The assistant is told to confirm before contacting customers, changing settings, deleting anything or recording payments.
+- Every change, and every blocked attempt, is listed under **Assistant activity** on the API page.
+- Keys can be revoked instantly, and each key is limited to 120 requests a minute.
+- Money is in dollars, and dates are `YYYY-MM-DD`.
+
+To add or change an operation, edit `src/lib/api/ops/*.ts`. The REST endpoints, the OpenAPI spec and the tool list are all generated from those files.
+
 ## Home page video
 
 The home page header crossfades between four close-up clips stored in `public/videos/`. Clip order, labels, crop position, speed (`PLAYBACK_RATE`) and how long each clip shows (`SEGMENT_MS`) are set at the top of `src/app/(site)/_components/hero-video.tsx`.

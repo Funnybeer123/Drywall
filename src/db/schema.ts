@@ -424,6 +424,37 @@ export const notificationLog = pgTable('notification_log', {
   createdAt: timestamp('created_at').notNull().defaultNow(),
 })
 
+// ---------- API access (AI assistant / integrations) ----------
+
+export const apiKeys = pgTable('api_keys', {
+  id: serial('id').primaryKey(),
+  name: text('name').notNull(),
+  prefix: text('prefix').notNull(), // first characters, shown in the dashboard to identify the key
+  keyHash: text('key_hash').notNull().unique(), // sha256 of the full key — the key itself is never stored
+  scopes: jsonb('scopes').$type<string[]>().notNull().default([]),
+  userId: integer('user_id')
+    .notNull()
+    .references(() => users.id, { onDelete: 'cascade' }), // the key acts with this user's role
+  lastUsedAt: timestamp('last_used_at'),
+  revokedAt: timestamp('revoked_at'),
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+})
+
+export const apiAuditLog = pgTable(
+  'api_audit_log',
+  {
+    id: serial('id').primaryKey(),
+    keyId: integer('key_id').references(() => apiKeys.id, { onDelete: 'set null' }),
+    operation: text('operation').notNull(),
+    method: text('method').notNull(),
+    path: text('path').notNull(),
+    status: integer('status').notNull(),
+    summary: text('summary'), // short description of what changed, or the error
+    createdAt: timestamp('created_at').notNull().defaultNow(),
+  },
+  (t) => [index('api_audit_created_idx').on(t.createdAt)],
+)
+
 export type User = typeof users.$inferSelect
 export type Role = (typeof roleEnum.enumValues)[number]
 export type Settings = typeof settings.$inferSelect

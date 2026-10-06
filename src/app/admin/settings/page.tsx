@@ -74,9 +74,14 @@ export default async function SettingsPage() {
         title="Settings"
         description="Your business details, branding and automation. Changes show on the website right away."
         actions={
-          <LinkButton href="/admin/settings/notifications" variant="secondary">
-            Notification log
-          </LinkButton>
+          <>
+            <LinkButton href="/admin/settings/api" variant="secondary">
+              API &amp; assistant
+            </LinkButton>
+            <LinkButton href="/admin/settings/notifications" variant="secondary">
+              Notification log
+            </LinkButton>
+          </>
         }
       />
 

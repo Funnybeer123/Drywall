@@ -2,12 +2,12 @@
 
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
-import { eq, or, sql } from 'drizzle-orm'
+import { eq } from 'drizzle-orm'
 import { db } from '@/db'
-import { customers, estimates, leads, type Lead } from '@/db/schema'
+import { estimates, leads, type Lead } from '@/db/schema'
 import { requireUser } from '@/lib/auth'
 import { guard, str, type ActionState, ValidationError } from '@/lib/action-state'
-import { toE164 } from '@/lib/utils'
+import { ensureCustomerForLead } from '@/lib/leads'
 import { LEAD_STATUSES } from '../_ops/constants'
 
 type LeadStatus = (typeof LEAD_STATUSES)[number]
@@ -47,48 +47,12 @@ export async function updateLeadNotes(id: number, _: ActionState, fd: FormData):
   })
 }
 
-/**
- * Links the lead to a customer: reuses an existing customer with the same email or phone,
- * otherwise creates one from the lead's info. Returns the customer id.
- */
-async function ensureCustomer(lead: Lead): Promise<number> {
-  if (lead.customerId) return lead.customerId
-
-  const phoneDigits = toE164(lead.phone)?.slice(-10)
-  const matches = []
-  if (lead.email) matches.push(sql`lower(${customers.email}) = lower(${lead.email})`)
-  if (phoneDigits) matches.push(sql`right(regexp_replace(coalesce(${customers.phone}, ''), '\\D', '', 'g'), 10) = ${phoneDigits}`)
-  const [existing] = matches.length
-    ? await db.select({ id: customers.id }).from(customers).where(or(...matches)).limit(1)
-    : []
-
-  const customerId =
-    existing?.id ??
-    (
-      await db
-        .insert(customers)
-        .values({
-          name: lead.name,
-          email: lead.email,
-          phone: lead.phone,
-          address: lead.address,
-          city: lead.city,
-          source: lead.source ?? (lead.referredBy ? 'Referral' : 'Website'),
-          notes: lead.referredBy ? `Referred by ${lead.referredBy}` : null,
-        })
-        .returning({ id: customers.id })
-    )[0].id
-
-  await db.update(leads).set({ customerId }).where(eq(leads.id, lead.id))
-  return customerId
-}
-
 export async function convertLead(fd: FormData): Promise<void> {
   await requireUser('leads:manage')
   await requireUser('customers:manage')
   const id = Number(fd.get('id'))
   const lead = await loadLead(id)
-  await ensureCustomer(lead)
+  await ensureCustomerForLead(lead)
   if (fd.get('markWon') === '1') await db.update(leads).set({ status: 'won' }).where(eq(leads.id, id))
   done(id)
   revalidatePath('/admin/customers')
@@ -99,7 +63,7 @@ export async function createEstimateFromLead(fd: FormData): Promise<void> {
   await requireUser('estimates:manage')
   const id = Number(fd.get('id'))
   const lead = await loadLead(id)
-  const customerId = await ensureCustomer(lead)
+  const customerId = await ensureCustomerForLead(lead)
   done(id)
   redirect(`/admin/estimates/new?customerId=${customerId}&leadId=${id}`)
 }
