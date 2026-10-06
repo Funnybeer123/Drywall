@@ -7,7 +7,7 @@ import { faqs, galleryItems, serviceAreas, services, settings, testimonials } fr
 import { getSettings } from '@/lib/settings'
 import { slugify } from '@/lib/utils'
 import { badRequest, notFound, op } from '../framework'
-import { absolute, idParams, saveBase64Upload, zText, zUpload } from '../common'
+import { absolute, idParam, saveBase64Upload, zId, zText, zUpload } from '../common'
 
 /** Public pages read content live, but refresh any cached render after edits. */
 const refreshSite = () => revalidatePath('/', 'layout')
@@ -42,7 +42,7 @@ export const contentOps = [
     summary:
       'Add a customer review to the website, or update one by id. Only add REAL reviews from real customers, worded as they gave them.',
     body: z.object({
-      id: z.number().int().positive().optional(),
+      testimonialId: zId.optional().describe('Pass to update an existing testimonial; omit to create'),
       customerName: zText(120).min(1).describe('e.g. "Jennifer R."'),
       location: zText(80).optional(),
       rating: z.number().int().min(1).max(5).default(5),
@@ -53,7 +53,7 @@ export const contentOps = [
       sort: z.number().int().default(0),
     }),
     run: async ({ body }) => {
-      const { id, ...values } = body
+      const { testimonialId: id, ...values } = body
       const [row] = id
         ? await db.update(testimonials).set(values).where(eq(testimonials.id, id)).returning()
         : await db.insert(testimonials).values(values).returning()
@@ -65,14 +65,14 @@ export const contentOps = [
   op({
     id: 'delete_testimonial',
     method: 'DELETE',
-    path: '/content/testimonials/{id}',
+    path: '/content/testimonials/{testimonialId}',
     tag: 'Website content',
     scope: 'content',
     permission: 'content:manage',
     summary: 'Remove a review from the website.',
-    params: idParams,
+    params: idParam('testimonialId', 'Testimonial id'),
     run: async ({ params }) => {
-      const [row] = await db.delete(testimonials).where(eq(testimonials.id, params.id)).returning()
+      const [row] = await db.delete(testimonials).where(eq(testimonials.id, params.testimonialId)).returning()
       if (!row) throw notFound('Testimonial')
       refreshSite()
       return { deleted: row.id }
@@ -127,12 +127,12 @@ export const contentOps = [
   op({
     id: 'update_gallery_item',
     method: 'PATCH',
-    path: '/content/gallery/{id}',
+    path: '/content/gallery/{galleryItemId}',
     tag: 'Website content',
     scope: 'content',
     permission: 'content:manage',
     summary: 'Edit a portfolio item’s title, category, description, featured/published flags or order.',
-    params: idParams,
+    params: idParam('galleryItemId', 'Gallery item id'),
     body: z.object({
       title: zText(160).min(1).optional(),
       category: zText(60).min(1).optional(),
@@ -143,7 +143,7 @@ export const contentOps = [
     }),
     run: async ({ params, body }) => {
       if (!Object.keys(body).length) throw badRequest('Nothing to update.')
-      const [row] = await db.update(galleryItems).set(body).where(eq(galleryItems.id, params.id)).returning()
+      const [row] = await db.update(galleryItems).set(body).where(eq(galleryItems.id, params.galleryItemId)).returning()
       if (!row) throw notFound('Gallery item')
       refreshSite()
       return { item: galleryOut(row) }
@@ -152,14 +152,14 @@ export const contentOps = [
   op({
     id: 'delete_gallery_item',
     method: 'DELETE',
-    path: '/content/gallery/{id}',
+    path: '/content/gallery/{galleryItemId}',
     tag: 'Website content',
     scope: 'content',
     permission: 'content:manage',
     summary: 'Remove a photo from the portfolio.',
-    params: idParams,
+    params: idParam('galleryItemId', 'Gallery item id'),
     run: async ({ params }) => {
-      const [row] = await db.delete(galleryItems).where(eq(galleryItems.id, params.id)).returning()
+      const [row] = await db.delete(galleryItems).where(eq(galleryItems.id, params.galleryItemId)).returning()
       if (!row) throw notFound('Gallery item')
       refreshSite()
       return { deleted: row.id }
@@ -186,7 +186,7 @@ export const contentOps = [
     permission: 'content:manage',
     summary: 'Add a service to the website, or update one by id.',
     body: z.object({
-      id: z.number().int().positive().optional(),
+      serviceId: zId.optional().describe('Pass to update an existing service; omit to create'),
       name: zText(120).min(1),
       summary: zText(300).min(1).describe('One sentence shown on cards'),
       body: zText(5000).default('').describe('Longer description on the Services page'),
@@ -195,7 +195,7 @@ export const contentOps = [
       published: z.boolean().default(true),
     }),
     run: async ({ body }) => {
-      const { id, ...values } = body
+      const { serviceId: id, ...values } = body
       const [row] = id
         ? await db.update(services).set(values).where(eq(services.id, id)).returning()
         : await db.insert(services).values({ ...values, slug: slugify(values.name) }).onConflictDoNothing().returning()
@@ -225,13 +225,13 @@ export const contentOps = [
     permission: 'content:manage',
     summary: 'Add an FAQ question & answer, or update one by id.',
     body: z.object({
-      id: z.number().int().positive().optional(),
+      faqId: zId.optional().describe('Pass to update an existing FAQ; omit to create'),
       question: zText(300).min(1),
       answer: zText(3000).min(1),
       sort: z.number().int().default(0),
     }),
     run: async ({ body }) => {
-      const { id, ...values } = body
+      const { faqId: id, ...values } = body
       const [row] = id
         ? await db.update(faqs).set(values).where(eq(faqs.id, id)).returning()
         : await db.insert(faqs).values(values).returning()
@@ -243,14 +243,14 @@ export const contentOps = [
   op({
     id: 'delete_faq',
     method: 'DELETE',
-    path: '/content/faqs/{id}',
+    path: '/content/faqs/{faqId}',
     tag: 'Website content',
     scope: 'content',
     permission: 'content:manage',
     summary: 'Remove an FAQ entry.',
-    params: idParams,
+    params: idParam('faqId', 'FAQ id'),
     run: async ({ params }) => {
-      const [row] = await db.delete(faqs).where(eq(faqs.id, params.id)).returning()
+      const [row] = await db.delete(faqs).where(eq(faqs.id, params.faqId)).returning()
       if (!row) throw notFound('FAQ')
       refreshSite()
       return { deleted: row.id }
@@ -277,14 +277,14 @@ export const contentOps = [
     permission: 'content:manage',
     summary: 'Add a town Willy serves (creates a local SEO page), or update one by id. Set published=false to hide it.',
     body: z.object({
-      id: z.number().int().positive().optional(),
+      areaId: zId.optional().describe('Pass to update an existing service area; omit to create'),
       city: zText(80).min(1),
       state: zText(20).min(2),
       blurb: zText(2000).optional().describe('Optional custom intro paragraph for that town’s page'),
       published: z.boolean().default(true),
     }),
     run: async ({ body }) => {
-      const { id, ...values } = body
+      const { areaId: id, ...values } = body
       const slug = slugify(`${values.city}-${values.state}`)
       const [row] = id
         ? await db.update(serviceAreas).set({ ...values, slug }).where(eq(serviceAreas.id, id)).returning()

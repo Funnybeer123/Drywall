@@ -24,7 +24,7 @@ import { EXPENSE_CATEGORY_LABELS } from '@/lib/expense-categories'
 import { ApiError, badRequest, notFound, op } from '../framework'
 import {
   expenseOut,
-  idParams,
+  idParam,
   invoiceOut,
   itemsToCents,
   saveBase64Upload,
@@ -104,13 +104,13 @@ export const moneyOps = [
   op({
     id: 'get_invoice',
     method: 'GET',
-    path: '/invoices/{id}',
+    path: '/invoices/{invoiceId}',
     tag: 'Invoices',
     scope: 'read',
     permission: 'invoices:manage',
     summary: 'Get an invoice with line items, payments, balance due and the customer pay link.',
-    params: idParams,
-    run: async ({ params }) => invoiceDetail(params.id),
+    params: idParam('invoiceId', 'Invoice id'),
+    run: async ({ params }) => invoiceDetail(params.invoiceId),
   }),
   op({
     id: 'create_invoice',
@@ -192,16 +192,16 @@ export const moneyOps = [
   op({
     id: 'send_invoice',
     method: 'POST',
-    path: '/invoices/{id}/send',
+    path: '/invoices/{invoiceId}/send',
     tag: 'Invoices',
     scope: 'send',
     permission: 'invoices:manage',
     summary:
       'Email the invoice (PDF + pay-online link) to the customer, optionally also by text. Set reminder=true for a friendly overdue reminder. Only do this when Willy says to send it.',
-    params: idParams,
+    params: idParam('invoiceId', 'Invoice id'),
     body: z.object({ alsoText: z.boolean().default(false), reminder: z.boolean().default(false) }),
     run: async ({ params, body }) => {
-      const { invoice } = await loadInvoice(params.id)
+      const { invoice } = await loadInvoice(params.invoiceId)
       if (invoice.status === 'void') throw badRequest('This invoice is void.')
       if (invoice.totalCents <= 0) throw badRequest('Invoice has no amount.')
       const [c] = await db.select().from(customers).where(eq(customers.id, invoice.customerId))
@@ -213,12 +213,12 @@ export const moneyOps = [
   op({
     id: 'record_payment',
     method: 'POST',
-    path: '/invoices/{id}/payments',
+    path: '/invoices/{invoiceId}/payments',
     tag: 'Invoices',
     scope: 'write',
     permission: 'payments:record',
     summary: 'Record a payment received outside the website (cash, check, Zelle, Venmo…). Updates the balance and paid status.',
-    params: idParams,
+    params: idParam('invoiceId', 'Invoice id'),
     body: z.object({
       amount: zAmount.describe('Amount received in dollars'),
       method: z.enum(['cash', 'check', 'zelle', 'venmo', 'other']),
@@ -226,7 +226,7 @@ export const moneyOps = [
       date: zDate.optional().describe('Date received (default today)'),
     }),
     run: async ({ params, body, ctx }) => {
-      const { invoice } = await loadInvoice(params.id)
+      const { invoice } = await loadInvoice(params.invoiceId)
       if (invoice.status === 'void') throw badRequest('This invoice is void.')
       const cents = toCents(body.amount)
       const balance = balanceDue(invoice)
@@ -247,14 +247,14 @@ export const moneyOps = [
   op({
     id: 'void_invoice',
     method: 'POST',
-    path: '/invoices/{id}/void',
+    path: '/invoices/{invoiceId}/void',
     tag: 'Invoices',
     scope: 'write',
     permission: 'invoices:manage',
     summary: 'Void an invoice that has no payments (e.g. created by mistake).',
-    params: idParams,
+    params: idParam('invoiceId', 'Invoice id'),
     run: async ({ params }) => {
-      const { invoice, payments: pays } = await loadInvoice(params.id)
+      const { invoice, payments: pays } = await loadInvoice(params.invoiceId)
       if (pays.length) throw badRequest('This invoice has payments recorded and can’t be voided.')
       await db.update(invoices).set({ status: 'void' }).where(eq(invoices.id, invoice.id))
       return invoiceDetail(invoice.id)
@@ -355,12 +355,12 @@ export const moneyOps = [
   op({
     id: 'update_expense',
     method: 'PATCH',
-    path: '/expenses/{id}',
+    path: '/expenses/{expenseId}',
     tag: 'Expenses',
     scope: 'write',
     permission: 'expenses:manage',
     summary: 'Correct an expense (amount, category, date, vendor, description, job). jobId null = overhead.',
-    params: idParams,
+    params: idParam('expenseId', 'Expense id'),
     body: z.object({
       amount: zAmount.optional(),
       category: CATEGORY.optional(),
@@ -379,7 +379,7 @@ export const moneyOps = [
           ...(amount !== undefined ? { amountCents: toCents(amount) } : {}),
           ...(jobId !== undefined ? { projectId: jobId } : {}),
         })
-        .where(eq(expenses.id, params.id))
+        .where(eq(expenses.id, params.expenseId))
         .returning()
       if (!e) throw notFound('Expense')
       return { expense: expenseOut(e) }
@@ -388,14 +388,14 @@ export const moneyOps = [
   op({
     id: 'delete_expense',
     method: 'DELETE',
-    path: '/expenses/{id}',
+    path: '/expenses/{expenseId}',
     tag: 'Expenses',
     scope: 'write',
     permission: 'expenses:manage',
     summary: 'Delete an expense entered by mistake (e.g. a duplicate).',
-    params: idParams,
+    params: idParam('expenseId', 'Expense id'),
     run: async ({ params }) => {
-      const [e] = await db.delete(expenses).where(eq(expenses.id, params.id)).returning()
+      const [e] = await db.delete(expenses).where(eq(expenses.id, params.expenseId)).returning()
       if (!e) throw notFound('Expense')
       return { deleted: expenseOut(e) }
     },
@@ -424,7 +424,7 @@ export const moneyOps = [
     permission: 'estimates:manage',
     summary: 'Add a standard price, or update one by passing its id.',
     body: z.object({
-      id: zId.optional(),
+      priceItemId: zId.optional().describe('Pass to update an existing price item; omit to create'),
       name: zText(200).min(1),
       unit: zText(30).default('each').describe('each, sheet, sq ft, hour…'),
       unitPrice: zDollars,
@@ -432,8 +432,8 @@ export const moneyOps = [
     }),
     run: async ({ body }) => {
       const values = { name: body.name, unit: body.unit, unitPriceCents: toCents(body.unitPrice), active: body.active }
-      const [row] = body.id
-        ? await db.update(priceItems).set(values).where(eq(priceItems.id, body.id)).returning()
+      const [row] = body.priceItemId
+        ? await db.update(priceItems).set(values).where(eq(priceItems.id, body.priceItemId)).returning()
         : await db.insert(priceItems).values(values).returning()
       if (!row) throw notFound('Price item')
       return { priceItem: { id: row.id, name: row.name, unit: row.unit, unitPrice: toDollars(row.unitPriceCents), active: row.active } }

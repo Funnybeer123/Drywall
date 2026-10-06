@@ -8,7 +8,9 @@ import { badRequest } from './framework'
 // ---------- Input building blocks ----------
 
 export const zId = z.coerce.number().int().positive()
-export const idParams = z.object({ id: zId.describe('Record id') })
+/** Path param with a specific name (jobId, invoiceId…) so an AI can't mix up which id goes where. */
+export const idParam = <N extends string>(name: N, label: string) =>
+  z.object({ [name]: zId.describe(label) } as { [K in N]: typeof zId })
 export const zDate = z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Use YYYY-MM-DD').describe('Date as YYYY-MM-DD')
 export const zDollars = z.number().min(0).max(10_000_000)
 export const zAmount = z.number().positive().max(10_000_000)

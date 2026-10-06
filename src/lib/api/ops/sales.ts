@@ -14,7 +14,7 @@ import { badRequest, notFound, op } from '../framework'
 import {
   customerOut,
   estimateOut,
-  idParams,
+  idParam,
   invoiceOut,
   itemsToCents,
   jobOut,
@@ -83,13 +83,13 @@ export const salesOps = [
   op({
     id: 'get_lead',
     method: 'GET',
-    path: '/leads/{id}',
+    path: '/leads/{leadId}',
     tag: 'Leads',
     scope: 'read',
     permission: 'leads:manage',
     summary: 'Get one lead with all details and photo links.',
-    params: idParams,
-    run: async ({ params }) => ({ lead: leadOut(await loadLead(params.id)) }),
+    params: idParam('leadId', 'Lead id'),
+    run: async ({ params }) => ({ lead: leadOut(await loadLead(params.leadId)) }),
   }),
   op({
     id: 'create_lead',
@@ -120,32 +120,32 @@ export const salesOps = [
   op({
     id: 'update_lead',
     method: 'PATCH',
-    path: '/leads/{id}',
+    path: '/leads/{leadId}',
     tag: 'Leads',
     scope: 'write',
     permission: 'leads:manage',
     summary: 'Update a lead’s status (new, contacted, estimate_sent, won, lost) and/or notes.',
-    params: idParams,
+    params: idParam('leadId', 'Lead id'),
     body: z.object({ status: LEAD_STATUS.optional(), notes: zText(5000).optional() }),
     run: async ({ params, body }) => {
-      await loadLead(params.id)
+      await loadLead(params.leadId)
       if (body.status === undefined && body.notes === undefined) throw badRequest('Nothing to update.')
-      const [l] = await db.update(leads).set(body).where(eq(leads.id, params.id)).returning()
+      const [l] = await db.update(leads).set(body).where(eq(leads.id, params.leadId)).returning()
       return { lead: leadOut(l) }
     },
   }),
   op({
     id: 'convert_lead_to_customer',
     method: 'POST',
-    path: '/leads/{id}/convert',
+    path: '/leads/{leadId}/convert',
     tag: 'Leads',
     scope: 'write',
     permission: 'customers:manage',
     summary: 'Turn a lead into a customer (reuses an existing customer with the same phone/email). Returns the customer.',
-    params: idParams,
+    params: idParam('leadId', 'Lead id'),
     body: z.object({ markWon: z.boolean().default(false).describe('Also mark the lead as won') }),
     run: async ({ params, body }) => {
-      const lead = await loadLead(params.id)
+      const lead = await loadLead(params.leadId)
       const customerId = await ensureCustomerForLead(lead)
       if (body.markWon) await db.update(leads).set({ status: 'won' }).where(eq(leads.id, lead.id))
       return { customer: customerOut(await loadCustomer(customerId)), leadId: lead.id }
@@ -188,14 +188,14 @@ export const salesOps = [
   op({
     id: 'get_customer',
     method: 'GET',
-    path: '/customers/{id}',
+    path: '/customers/{customerId}',
     tag: 'Customers',
     scope: 'read',
     permission: 'customers:manage',
     summary: 'Get a customer with their jobs, estimates and invoices (with balances).',
-    params: idParams,
+    params: idParam('customerId', 'Customer id'),
     run: async ({ params }) => {
-      const c = await loadCustomer(params.id)
+      const c = await loadCustomer(params.customerId)
       const today = todayISO()
       const [jobs, ests, invs] = await Promise.all([
         db.select().from(projects).where(eq(projects.customerId, c.id)).orderBy(desc(projects.createdAt)),
@@ -228,17 +228,17 @@ export const salesOps = [
   op({
     id: 'update_customer',
     method: 'PATCH',
-    path: '/customers/{id}',
+    path: '/customers/{customerId}',
     tag: 'Customers',
     scope: 'write',
     permission: 'customers:manage',
     summary: 'Update a customer’s contact details or notes. Only the fields you send are changed.',
-    params: idParams,
+    params: idParam('customerId', 'Customer id'),
     body: z.object(customerFields).partial(),
     run: async ({ params, body }) => {
-      await loadCustomer(params.id)
+      await loadCustomer(params.customerId)
       if (!Object.keys(body).length) throw badRequest('Nothing to update.')
-      const [c] = await db.update(customers).set(body).where(eq(customers.id, params.id)).returning()
+      const [c] = await db.update(customers).set(body).where(eq(customers.id, params.customerId)).returning()
       return { customer: customerOut(c) }
     },
   }),
@@ -275,14 +275,14 @@ export const salesOps = [
   op({
     id: 'get_estimate',
     method: 'GET',
-    path: '/estimates/{id}',
+    path: '/estimates/{estimateId}',
     tag: 'Estimates',
     scope: 'read',
     permission: 'estimates:manage',
     summary: 'Get an estimate with its line items.',
-    params: idParams,
+    params: idParam('estimateId', 'Estimate id'),
     run: async ({ params }) => {
-      const { estimate, items } = await loadEstimate(params.id)
+      const { estimate, items } = await loadEstimate(params.estimateId)
       return {
         estimate: estimateOut(estimate),
         items: items.map((i) => ({ description: i.description, quantity: i.quantity, unitPrice: toDollars(i.unitPriceCents) })),
@@ -330,12 +330,12 @@ export const salesOps = [
   op({
     id: 'update_estimate',
     method: 'PATCH',
-    path: '/estimates/{id}',
+    path: '/estimates/{estimateId}',
     tag: 'Estimates',
     scope: 'write',
     permission: 'estimates:manage',
     summary: 'Edit a draft or sent estimate (title, notes, valid-until, tax, or replace all line items).',
-    params: idParams,
+    params: idParam('estimateId', 'Estimate id'),
     body: z.object({
       title: zText(200).min(1).optional(),
       notes: zText(5000).optional(),
@@ -344,31 +344,31 @@ export const salesOps = [
       items: zItems.optional().describe('Replaces ALL existing line items'),
     }),
     run: async ({ params, body }) => {
-      const { estimate, items } = await loadEstimate(params.id)
+      const { estimate, items } = await loadEstimate(params.estimateId)
       if (estimate.status === 'accepted' || estimate.status === 'declined') {
         throw badRequest(`Estimate is ${estimate.status} and can’t be edited.`)
       }
       const { items: newItems, taxRatePercent, ...rest } = body
-      if (Object.keys(rest).length) await db.update(estimates).set(rest).where(eq(estimates.id, params.id))
+      if (Object.keys(rest).length) await db.update(estimates).set(rest).where(eq(estimates.id, params.estimateId))
       if (newItems || taxRatePercent !== undefined) {
         const taxRateBps = taxBpsFromPercent(taxRatePercent, estimate.taxRateBps)
-        await saveEstimateItems(params.id, newItems ? itemsToCents(newItems) : items, taxRateBps)
+        await saveEstimateItems(params.estimateId, newItems ? itemsToCents(newItems) : items, taxRateBps)
       }
-      return { estimate: estimateOut((await loadEstimate(params.id)).estimate) }
+      return { estimate: estimateOut((await loadEstimate(params.estimateId)).estimate) }
     },
   }),
   op({
     id: 'send_estimate',
     method: 'POST',
-    path: '/estimates/{id}/send',
+    path: '/estimates/{estimateId}/send',
     tag: 'Estimates',
     scope: 'send',
     permission: 'estimates:manage',
     summary: 'Email the estimate (PDF + accept-online link) to the customer, optionally also by text. Only do this when Willy says to send it.',
-    params: idParams,
+    params: idParam('estimateId', 'Estimate id'),
     body: z.object({ alsoText: z.boolean().default(false) }),
     run: async ({ params, body }) => {
-      const { estimate } = await loadEstimate(params.id)
+      const { estimate } = await loadEstimate(params.estimateId)
       if (estimate.status === 'declined') throw badRequest('Estimate was declined.')
       const results = await sendEstimate(estimate.id, body.alsoText)
       if (!results.length) throw badRequest('Customer has no email or phone on file.')
@@ -388,14 +388,14 @@ export const salesOps = [
   op({
     id: 'convert_estimate_to_job',
     method: 'POST',
-    path: '/estimates/{id}/job',
+    path: '/estimates/{estimateId}/job',
     tag: 'Estimates',
     scope: 'write',
     permission: 'jobs:manage',
     summary: 'Create a pending job from an estimate (or return the job it is already linked to).',
-    params: idParams,
+    params: idParam('estimateId', 'Estimate id'),
     run: async ({ params }) => {
-      const { estimate } = await loadEstimate(params.id)
+      const { estimate } = await loadEstimate(params.estimateId)
       const jobId = await createProjectFromEstimate(estimate)
       const [p] = await db.select().from(projects).where(eq(projects.id, jobId))
       return { job: jobOut(p) }

@@ -18,8 +18,8 @@ import { queueReviewRequest } from '@/lib/notify'
 import { getProjectFinancials } from '@/lib/profit'
 import { addDays, todayISO } from '@/lib/dates'
 import type { SessionUser } from '@/lib/auth'
-import { badRequest, notFound, op } from '../framework'
-import { absolute, customerOut, expenseOut, idParams, jobOut, saveBase64Upload, toCents, toDollars, zDate, zDollars, zId, zLimit, zText, zUpload } from '../common'
+import { ApiError, badRequest, notFound, op } from '../framework'
+import { absolute, customerOut, expenseOut, idParam, jobOut, saveBase64Upload, toCents, toDollars, zDate, zDollars, zId, zLimit, zText, zUpload } from '../common'
 
 const JOB_STATUS = z.enum(['pending', 'scheduled', 'in_progress', 'completed', 'cancelled'])
 
@@ -82,14 +82,14 @@ export const jobOps = [
   op({
     id: 'get_job',
     method: 'GET',
-    path: '/jobs/{id}',
+    path: '/jobs/{jobId}',
     tag: 'Jobs',
     scope: 'read',
     permission: 'jobs:view_assigned',
     summary: 'Get a job with customer, crew, photos, expenses, labor and (for the owner) profit.',
-    params: idParams,
+    params: idParam('jobId', 'Job id'),
     run: async ({ params, ctx }) => {
-      const p = await loadJob(ctx.user, params.id)
+      const p = await loadJob(ctx.user, params.jobId)
       const seeMoney = can(ctx.user, 'expenses:manage')
       const [cust, crew, photos, exp, labor] = await Promise.all([
         db.select().from(customers).where(eq(customers.id, p.customerId)),
@@ -175,13 +175,13 @@ export const jobOps = [
   op({
     id: 'update_job',
     method: 'PATCH',
-    path: '/jobs/{id}',
+    path: '/jobs/{jobId}',
     tag: 'Jobs',
     scope: 'write',
     permission: 'jobs:manage',
     summary:
       'Update a job: details, dates (schedule it), quoted price, notes or status. Setting status to "completed" automatically queues a Google review request to the customer.',
-    params: idParams,
+    params: idParam('jobId', 'Job id'),
     body: z.object({
       title: zText(200).min(1).optional(),
       description: zText(5000).nullable().optional(),
@@ -194,7 +194,7 @@ export const jobOps = [
       notes: zText(10000).nullable().optional(),
     }),
     run: async ({ params, body, ctx }) => {
-      const p = await loadJob(ctx.user, params.id)
+      const p = await loadJob(ctx.user, params.jobId)
       if (!Object.keys(body).length) throw badRequest('Nothing to update.')
       const { quoted, ...rest } = body
       const startDate = body.startDate === undefined ? p.startDate : body.startDate
@@ -218,15 +218,15 @@ export const jobOps = [
   op({
     id: 'set_job_crew',
     method: 'POST',
-    path: '/jobs/{id}/crew',
+    path: '/jobs/{jobId}/crew',
     tag: 'Jobs',
     scope: 'write',
     permission: 'jobs:manage',
     summary: 'Set who is assigned to a job (replaces the current crew). Get user ids from list_team.',
-    params: idParams,
+    params: idParam('jobId', 'Job id'),
     body: z.object({ userIds: z.array(zId).max(50) }),
     run: async ({ params, body, ctx }) => {
-      const p = await loadJob(ctx.user, params.id)
+      const p = await loadJob(ctx.user, params.jobId)
       const valid = body.userIds.length
         ? await db.select({ id: users.id, name: users.name }).from(users).where(and(inArray(users.id, body.userIds), eq(users.active, true)))
         : []
@@ -240,13 +240,13 @@ export const jobOps = [
   op({
     id: 'add_labor',
     method: 'POST',
-    path: '/jobs/{id}/labor',
+    path: '/jobs/{jobId}/labor',
     tag: 'Jobs',
     scope: 'write',
     permission: 'labor:manage',
     summary:
       'Log hours worked on a job. Pass userId for a team member (their pay rate is used), or workerName + rate for a sub/helper not on the team.',
-    params: idParams,
+    params: idParam('jobId', 'Job id'),
     body: z.object({
       date: zDate,
       hours: z.number().positive().max(744),
@@ -254,9 +254,36 @@ export const jobOps = [
       workerName: zText(120).optional(),
       rate: zDollars.optional().describe('Hourly rate in dollars (required for non-team workers; owner may override for team members)'),
       note: zText(500).optional(),
+      allowDuplicate: z
+        .boolean()
+        .default(false)
+        .describe('Set true only if the same worker really worked the same hours on this job twice on that date'),
     }),
     run: async ({ params, body, ctx }) => {
-      const p = await loadJob(ctx.user, params.id)
+      const p = await loadJob(ctx.user, params.jobId)
+      const hours = Math.round(body.hours * 100) / 100
+      if (!body.allowDuplicate) {
+        // Catch the most common assistant slip: logging the same hours twice (e.g. after a retry).
+        const [dupe] = await db
+          .select({ id: laborEntries.id })
+          .from(laborEntries)
+          .where(
+            and(
+              eq(laborEntries.projectId, p.id),
+              eq(laborEntries.date, body.date),
+              eq(laborEntries.hours, hours),
+              body.userId ? eq(laborEntries.userId, body.userId) : eq(laborEntries.workerName, body.workerName ?? ''),
+            ),
+          )
+          .limit(1)
+        if (dupe) {
+          throw new ApiError(
+            409,
+            'duplicate',
+            `Labor entry #${dupe.id} already logs ${hours} hours for this worker on ${body.date}. Not added again — pass allowDuplicate: true if this is really a second shift.`,
+          )
+        }
+      }
       let workerName: string
       let rateCents: number
       if (body.userId) {
@@ -277,7 +304,7 @@ export const jobOps = [
           userId: body.userId ?? null,
           workerName,
           date: body.date,
-          hours: Math.round(body.hours * 100) / 100,
+          hours,
           rateCents,
           note: body.note ?? null,
           createdBy: ctx.user.id,
@@ -287,21 +314,40 @@ export const jobOps = [
     },
   }),
   op({
+    id: 'delete_labor',
+    method: 'DELETE',
+    path: '/jobs/{jobId}/labor/{laborEntryId}',
+    tag: 'Jobs',
+    scope: 'write',
+    permission: 'labor:manage',
+    summary: 'Delete a labor entry logged by mistake (e.g. a duplicate). Get laborEntryId from get_job.',
+    params: z.object({ jobId: zId.describe('Job id'), laborEntryId: zId.describe('Labor entry id (from get_job → labor[].id)') }),
+    run: async ({ params, ctx }) => {
+      const p = await loadJob(ctx.user, params.jobId)
+      const [row] = await db
+        .delete(laborEntries)
+        .where(and(eq(laborEntries.id, params.laborEntryId), eq(laborEntries.projectId, p.id)))
+        .returning()
+      if (!row) throw notFound('Labor entry on this job')
+      return { deleted: { id: row.id, worker: row.workerName, date: row.date, hours: row.hours } }
+    },
+  }),
+  op({
     id: 'add_job_photo',
     method: 'POST',
-    path: '/jobs/{id}/photos',
+    path: '/jobs/{jobId}/photos',
     tag: 'Jobs',
     scope: 'write',
     permission: 'jobs:add_photos',
     summary: 'Attach a before/progress/after photo to a job (image sent as base64).',
-    params: idParams,
+    params: idParam('jobId', 'Job id'),
     body: z.object({
       photo: zUpload,
       kind: z.enum(['before', 'progress', 'after']).default('progress'),
       caption: zText(300).optional(),
     }),
     run: async ({ params, body, ctx }) => {
-      const p = await loadJob(ctx.user, params.id)
+      const p = await loadJob(ctx.user, params.jobId)
       if (!body.photo.contentType.startsWith('image/')) throw badRequest('Job photos must be images.')
       const url = await saveBase64Upload(body.photo, 'projects')
       const [ph] = await db
@@ -415,14 +461,14 @@ export const jobOps = [
   op({
     id: 'delete_schedule_block',
     method: 'DELETE',
-    path: '/schedule/blocks/{id}',
+    path: '/schedule/blocks/{blockId}',
     tag: 'Schedule',
     scope: 'write',
     permission: 'schedule:manage',
     summary: 'Remove a time-off / blackout block.',
-    params: idParams,
+    params: idParam('blockId', 'Schedule block id'),
     run: async ({ params }) => {
-      const [b] = await db.delete(scheduleBlocks).where(eq(scheduleBlocks.id, params.id)).returning()
+      const [b] = await db.delete(scheduleBlocks).where(eq(scheduleBlocks.id, params.blockId)).returning()
       if (!b) throw notFound('Schedule block')
       return { deleted: b.id }
     },
