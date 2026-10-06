@@ -1,6 +1,8 @@
 import type { MetadataRoute } from 'next'
 import { appUrl } from '@/lib/settings'
 
+export const dynamic = 'force-dynamic'
+
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: {

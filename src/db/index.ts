@@ -22,10 +22,20 @@ function createDb(): DB {
   return drizzlePglite(client, { schema }) as unknown as DB
 }
 
+// One connection per process, reused across hot reloads in dev. Created lazily on the
+// first query so that merely importing this module (e.g. by `next build` workers)
+// never opens the database — PGlite's files must only be opened by one process.
 const globalForDb = globalThis as unknown as { __db?: DB }
+function getDb(): DB {
+  return (globalForDb.__db ??= createDb())
+}
 
-// Reuse one connection across hot reloads in dev.
-export const db: DB = globalForDb.__db ?? createDb()
-if (process.env.NODE_ENV !== 'production') globalForDb.__db = db
+export const db: DB = new Proxy({} as DB, {
+  get(_, prop) {
+    const real = getDb()
+    const value = Reflect.get(real, prop, real)
+    return typeof value === 'function' ? value.bind(real) : value
+  },
+})
 
 export { schema }

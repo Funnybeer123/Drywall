@@ -171,18 +171,22 @@ await invoice({ customerId: cust[0].id, projectId: pDone.id, number: 1002, kind:
 await invoice({ customerId: cust[1].id, projectId: pActive.id, number: 1003, kind: 'deposit', issueDaysAgo: 20, status: 'sent', items: [{ description: 'Deposit — bathroom ceiling repair', quantity: 1, unitPriceCents: 82500 }] })
 await invoice({ customerId: cust[3].id, projectId: pBuilder.id, number: 1004, kind: 'standard', issueDaysAgo: 1, status: 'draft', items: [{ description: 'Hang & finish 1/2" drywall', quantity: 180, unitPriceCents: 6500 }, { description: 'Hang & finish 5/8" fire-rated (garage)', quantity: 24, unitPriceCents: 7500 }] })
 
-const estTotals = computeTotals([{ quantity: 900, unitPriceCents: 250 }], 0)
-await db.insert(s.estimates).values({
-  customerId: cust[2].id,
-  projectId: pPopcorn.id,
-  title: 'Whole-house popcorn removal',
-  status: 'accepted',
-  token: newToken(),
-  ...estTotals,
-  acceptedAt: new Date(Date.now() - 7 * 864e5),
-  acceptedName: 'Danielle King',
-  sentAt: new Date(Date.now() - 9 * 864e5),
-})
+const estItems = [{ description: 'Popcorn removal & smooth finish — living room + 3 bedrooms', quantity: 900, unitPriceCents: 250, sort: 0 }]
+const [demoEstimate] = await db
+  .insert(s.estimates)
+  .values({
+    customerId: cust[2].id,
+    projectId: pPopcorn.id,
+    title: 'Whole-house popcorn removal',
+    status: 'accepted',
+    token: newToken(),
+    ...computeTotals(estItems, 0),
+    acceptedAt: new Date(Date.now() - 7 * 864e5),
+    acceptedName: 'Danielle King',
+    sentAt: new Date(Date.now() - 9 * 864e5),
+  })
+  .returning()
+await db.insert(s.estimateItems).values(estItems.map((it) => ({ ...it, estimateId: demoEstimate.id })))
 
 await db.insert(s.expenses).values([
   { projectId: pDone.id, date: addDays(today, -41), category: 'drywall_sheets', vendor: 'Menards', description: '96 sheets 1/2" 4x8', amountCents: 158400, createdBy: willie.id },

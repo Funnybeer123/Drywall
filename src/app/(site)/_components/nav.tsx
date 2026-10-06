@@ -1,20 +1,12 @@
 'use client'
 
+import { NAV_LINKS } from './nav-links'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { ArrowRight, Menu, Phone, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
-
-export const NAV_LINKS = [
-  { href: '/services', label: 'Services' },
-  { href: '/work', label: 'Our Work' },
-  { href: '/reviews', label: 'Reviews' },
-  { href: '/availability', label: 'Availability' },
-  { href: '/about', label: 'About' },
-  { href: '/faq', label: 'FAQ' },
-] as const
 
 function isActive(pathname: string, href: string) {
   return pathname === href || pathname.startsWith(href + '/')

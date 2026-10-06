@@ -26,9 +26,8 @@ const TOKEN_RE = /^[A-Za-z0-9]{10,64}$/
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { token } = await params
   const data = TOKEN_RE.test(token) ? await getInvoiceWithItems({ token }) : null
-  const s = await getSettings()
   return {
-    title: data ? `Invoice #${data.invoice.number} — ${s.businessName}` : 'Invoice',
+    title: data ? `Invoice #${data.invoice.number}` : 'Invoice',
     robots: { index: false, follow: false },
   }
 }

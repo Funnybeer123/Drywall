@@ -27,7 +27,7 @@ function svg(p: (typeof PLACEHOLDERS)[number]) {
 <rect width="1200" height="800" fill="url(#g)"/>${seams}${dots}${stain}${hole}
 <rect y="560" width="1200" height="240" fill="url(#f)"/><rect y="556" width="1200" height="10" fill="#fff" fill-opacity=".9"/>
 <rect x="760" y="140" width="300" height="300" fill="#fff" fill-opacity=".5" stroke="#fff" stroke-width="10"/>
-<text x="40" y="760" font-family="Helvetica, Arial, sans-serif" font-size="30" font-weight="700" fill="#0f172a" fill-opacity=".55">${p.label}</text>
+<text x="40" y="760" font-family="Helvetica, Arial, sans-serif" font-size="30" font-weight="700" fill="#0f172a" fill-opacity=".55">${p.label.replace(/&/g, "&amp;")}</text>
 <text x="40" y="60" font-family="Helvetica, Arial, sans-serif" font-size="20" fill="#0f172a" fill-opacity=".35">SAMPLE PHOTO — replace in Admin → Website content</text>
 </svg>`
 }

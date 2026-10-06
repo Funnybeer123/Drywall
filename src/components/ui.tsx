@@ -103,7 +103,8 @@ export function Checkbox({ label, ...props }: ComponentProps<'input'> & { label:
 // ---------- Layout bits ----------
 
 export function Card({ className, ...props }: ComponentProps<'div'>) {
-  return <div className={cn('rounded-xl bg-white shadow-sm ring-1 ring-slate-200', className)} {...props} />
+  // min-w-0 stops long content from stretching a card past its grid column on phones.
+  return <div className={cn('min-w-0 rounded-xl bg-white shadow-sm ring-1 ring-slate-200', className)} {...props} />
 }
 
 export function CardHeader({ title, action, description }: { title: ReactNode; action?: ReactNode; description?: ReactNode }) {

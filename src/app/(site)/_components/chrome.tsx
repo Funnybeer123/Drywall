@@ -4,7 +4,8 @@ import type { Settings } from '@/db/schema'
 import { buttonClass } from '@/components/ui'
 import { formatPhone, smsHref, telHref } from '@/lib/utils'
 import { parseWorkDays } from '@/lib/availability'
-import { DesktopNav, MobileNav, NAV_LINKS } from './nav'
+import { DesktopNav, MobileNav } from './nav'
+import { NAV_LINKS } from './nav-links'
 import { FacebookIcon, GoogleIcon, InstagramIcon } from './icons'
 
 type Area = { slug: string; city: string; state: string }

@@ -19,6 +19,10 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export const viewport: Viewport = { themeColor: '#0f172a' }
 
+// Everything reads live settings from the database, so render on request.
+// This also keeps `next build` from opening the database at all.
+export const dynamic = 'force-dynamic'
+
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const s = await getSettings()
   return (
