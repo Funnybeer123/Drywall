@@ -297,7 +297,7 @@ export const salesOps = [
     scope: 'write',
     permission: 'estimates:manage',
     summary:
-      'Create a draft estimate with line items for a customer. Use list_price_items for Willy’s standard prices. It is NOT sent until send_estimate is called.',
+      'Create a draft estimate with line items for a customer. Use list_price_items for Willy’s standard prices. It stays a draft (not sent to the customer) until it is sent with send_estimate, which needs a key with the "send" scope, or from the dashboard.',
     body: z.object({
       customerId: zId,
       title: zText(200).min(1),

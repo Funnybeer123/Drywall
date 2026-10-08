@@ -120,7 +120,7 @@ export const moneyOps = [
     scope: 'write',
     permission: 'invoices:manage',
     summary:
-      'Create a DRAFT invoice. Give items, or estimateId to copy an estimate’s items. For a deposit, use kind "deposit" with a single item for the deposit amount. Not sent until send_invoice is called.',
+      'Create a DRAFT invoice. Give items, or estimateId to copy an estimate’s items. For a deposit, use kind "deposit" with a single item for the deposit amount. It stays a draft (not sent to the customer) until it is sent with send_invoice, which needs a key with the "send" scope, or from the dashboard.',
     body: z.object({
       customerId: zId.optional().describe('Required unless estimateId or jobId is given'),
       jobId: zId.optional(),
