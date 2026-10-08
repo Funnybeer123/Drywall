@@ -17,13 +17,15 @@ const { db } = await import('../src/db')
 const s = await import('../src/db/schema')
 const { eq } = await import('drizzle-orm')
 
-const rl = createInterface({ input: stdin, output: stdout })
 console.log(`Database: ${process.env.DATABASE_URL ? 'DATABASE_URL (production Postgres)' : 'local embedded database'}\n`)
 
-const name = (await rl.question('Owner name: ')).trim() || 'Willy'
-const email = (await rl.question('Owner email (used to sign in): ')).trim().toLowerCase()
-const password = await rl.question('Password (min 10 characters): ')
-rl.close()
+// OWNER_NAME / OWNER_EMAIL / OWNER_PASSWORD skip the prompts (used for unattended first-boot setup).
+const env = process.env
+const rl = env.OWNER_EMAIL && env.OWNER_PASSWORD ? null : createInterface({ input: stdin, output: stdout })
+const name = (env.OWNER_NAME ?? (await rl!.question('Owner name: '))).trim() || 'Willy'
+const email = (env.OWNER_EMAIL ?? (await rl!.question('Owner email (used to sign in): '))).trim().toLowerCase()
+const password = env.OWNER_PASSWORD ?? (await rl!.question('Password (min 10 characters): '))
+rl?.close()
 
 if (!/^\S+@\S+\.\S+$/.test(email)) throw new Error('That email does not look valid.')
 if (password.length < 10) throw new Error('Password must be at least 10 characters.')

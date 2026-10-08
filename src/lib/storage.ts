@@ -34,7 +34,9 @@ export async function saveUpload(file: File, folder: 'leads' | 'gallery' | 'proj
   if (process.env.VERCEL) {
     throw new UploadError('File storage is not configured (set BLOB_READ_WRITE_TOKEN).')
   }
-  const dest = path.join(process.cwd(), 'public', 'uploads', name)
+  // With DATA_DIR set (self-hosted), files live on the persistent disk and are served by app/uploads.
+  const root = process.env.DATA_DIR ? path.join(process.env.DATA_DIR, 'uploads') : path.join(process.cwd(), 'public', 'uploads')
+  const dest = path.join(root, name)
   await mkdir(path.dirname(dest), { recursive: true })
   await writeFile(dest, Buffer.from(await file.arrayBuffer()))
   return `/uploads/${name}`

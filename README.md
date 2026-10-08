@@ -102,6 +102,17 @@ Every service below has a free tier that's enough to start.
 
 The daily automation (review requests, overdue-invoice reminders, "tomorrow's jobs" texts) runs from `vercel.json` every morning.
 
+### Azure demo (temporary)
+
+A demo copy runs on a free Azure App Service (`willys-drywall-demo-zgwef` in resource group `willys-drywall-demo`). It uses the built-in database stored in `DATA_DIR=/home/data` on the app's persistent disk, so there's no database server to pay for. To push code changes to it:
+
+```bash
+az login
+npm run deploy:azure
+```
+
+Redeploying keeps the existing data, and new migrations run on startup. The first boot creates the owner from the `OWNER_NAME` / `OWNER_EMAIL` / `OWNER_PASSWORD` app settings. To add another owner login, set `EXTRA_OWNER_NAME` / `EXTRA_OWNER_EMAIL` / `EXTRA_OWNER_PASSWORD`, wait for the restart, then delete those settings. The daily automation doesn't run on a schedule there. Delete the resource group when the demo is over.
+
 ---
 
 ## 4. Growing the business

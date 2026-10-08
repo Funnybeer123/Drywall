@@ -17,7 +17,8 @@
     "db:reset": "tsx scripts/reset.ts",
     "setup": "npm run db:migrate && npm run db:seed",
     "create-owner": "tsx scripts/create-owner.ts",
-    "assistant": "tsx scripts/grok-assistant.ts"
+    "assistant": "tsx scripts/grok-assistant.ts",
+    "deploy:azure": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/azure/deploy.ps1"
   },
   "dependencies": {
     "@electric-sql/pglite": "^0.5.8",

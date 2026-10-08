@@ -1,4 +1,5 @@
 import { mkdirSync } from 'node:fs'
+import path from 'node:path'
 import { drizzle as drizzlePg, type NodePgDatabase } from 'drizzle-orm/node-postgres'
 import { drizzle as drizzlePglite } from 'drizzle-orm/pglite'
 import { PGlite } from '@electric-sql/pglite'
@@ -6,7 +7,9 @@ import * as schema from './schema'
 
 export type DB = NodePgDatabase<typeof schema>
 
-export const PGLITE_DIR = '.data/pglite'
+// DATA_DIR moves the embedded database (and local uploads) to a persistent disk, e.g. /home/data on Azure.
+export const DATA_DIR = process.env.DATA_DIR || '.data'
+export const PGLITE_DIR = path.join(DATA_DIR, 'pglite')
 
 /**
  * Production: real Postgres (Neon) via DATABASE_URL.
@@ -17,7 +20,7 @@ function createDb(): DB {
   if (process.env.DATABASE_URL) {
     return drizzlePg(process.env.DATABASE_URL, { schema })
   }
-  mkdirSync('.data', { recursive: true })
+  mkdirSync(DATA_DIR, { recursive: true })
   const client = new PGlite(PGLITE_DIR)
   return drizzlePglite(client, { schema }) as unknown as DB
 }
