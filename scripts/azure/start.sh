@@ -21,6 +21,12 @@ if [ -n "$EXTRA_OWNER_EMAIL" ]; then
   OWNER_NAME="$EXTRA_OWNER_NAME" OWNER_EMAIL="$EXTRA_OWNER_EMAIL" OWNER_PASSWORD="$EXTRA_OWNER_PASSWORD" node setup/create-owner.mjs
 fi
 
+# Optional one-time wipe of all business records (see scripts/clear-business-data.ts).
+# Delete the CLEAR_BUSINESS_DATA setting afterwards, or it wipes again on every restart.
+if [ -n "$CLEAR_BUSINESS_DATA" ]; then
+  node setup/clear-business-data.mjs
+fi
+
 # Optional API key for the assistant (only its hash is set here). Safe to leave set: it's idempotent.
 if [ -n "$API_KEY_HASH" ]; then
   node setup/create-api-key.mjs
