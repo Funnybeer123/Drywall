@@ -46,7 +46,7 @@ Copy-Item (Join-Path $PSScriptRoot 'start.sh') $pkg
 
 Step 'Bundling setup scripts'
 $banner = "import{createRequire as __cr}from'module';const require=__cr(import.meta.url);"
-foreach ($script in 'migrate', 'create-owner') {
+foreach ($script in 'migrate', 'create-owner', 'create-api-key') {
   npx esbuild "scripts/$script.ts" --bundle --platform=node --format=esm --target=node22 `
     --external:@electric-sql/pglite --external:pg --external:pg-native "--banner:js=$banner" `
     "--outfile=$pkg/setup/$script.mjs" --log-level=warning

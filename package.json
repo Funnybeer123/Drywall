@@ -17,6 +17,7 @@
     "db:reset": "tsx scripts/reset.ts",
     "setup": "npm run db:migrate && npm run db:seed",
     "create-owner": "tsx scripts/create-owner.ts",
+    "create-api-key": "tsx scripts/create-api-key.ts",
     "assistant": "tsx scripts/grok-assistant.ts",
     "deploy:azure": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/azure/deploy.ps1"
   },

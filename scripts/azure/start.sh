@@ -21,5 +21,10 @@ if [ -n "$EXTRA_OWNER_EMAIL" ]; then
   OWNER_NAME="$EXTRA_OWNER_NAME" OWNER_EMAIL="$EXTRA_OWNER_EMAIL" OWNER_PASSWORD="$EXTRA_OWNER_PASSWORD" node setup/create-owner.mjs
 fi
 
+# Optional API key for the assistant (only its hash is set here). Safe to leave set: it's idempotent.
+if [ -n "$API_KEY_HASH" ]; then
+  node setup/create-api-key.mjs
+fi
+
 export HOSTNAME=0.0.0.0
 exec node server.js
