@@ -28,7 +28,7 @@ export default async function NewProjectPage({ searchParams }: { searchParams: P
         {list.length === 0 ? (
           <p className="text-sm text-slate-600">
             Add a customer first.{' '}
-            <Link href="/admin/customers/new" className="font-medium text-brand underline">
+            <Link href="/admin/customers/new" className="font-medium text-brand-fg underline">
               New customer
             </Link>
           </p>

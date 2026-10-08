@@ -32,13 +32,13 @@ export default async function QuotePage({ searchParams }: { searchParams: Promis
             business day — usually sooner.
           </p>
 
-          <div className="mt-8 rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-200 sm:p-8">
+          <div className="mt-8 rounded-2xl bg-surface p-5 shadow-sm ring-1 ring-slate-200 sm:p-8">
             <QuoteForm defaultJobType={defaultJobType} turnstileSiteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || undefined} />
           </div>
         </div>
 
         <aside className="space-y-6 lg:pt-28">
-          <div className="rounded-2xl bg-slate-900 p-6 text-white">
+          <div className="theme-static rounded-2xl bg-slate-900 p-6 text-white dark:ring-1 dark:ring-white/10">
             <p className="font-semibold">Prefer to talk?</p>
             <p className="mt-1 text-sm text-slate-400">Call or text — we answer during the work day and return messages fast.</p>
             <div className="mt-5 grid gap-2">
@@ -51,23 +51,23 @@ export default async function QuotePage({ searchParams }: { searchParams: Promis
             </div>
           </div>
 
-          <div className="rounded-2xl bg-white p-6 ring-1 ring-slate-200">
+          <div className="rounded-2xl bg-surface p-6 ring-1 ring-slate-200">
             <p className="font-semibold text-slate-900">What happens next</p>
             <ol className="mt-4 space-y-4 text-sm text-slate-600">
               <li className="flex gap-3">
-                <Clock className="mt-0.5 size-4 shrink-0 text-brand" aria-hidden="true" />
+                <Clock className="mt-0.5 size-4 shrink-0 text-brand-fg" aria-hidden="true" />
                 <span>
                   <span className="font-medium text-slate-900">We review your request</span> and reach out within one business day.
                 </span>
               </li>
               <li className="flex gap-3">
-                <ShieldCheck className="mt-0.5 size-4 shrink-0 text-brand" aria-hidden="true" />
+                <ShieldCheck className="mt-0.5 size-4 shrink-0 text-brand-fg" aria-hidden="true" />
                 <span>
                   <span className="font-medium text-slate-900">You get a clear, itemized estimate</span> you can accept online.
                 </span>
               </li>
               <li className="flex gap-3">
-                <CalendarCheck className="mt-0.5 size-4 shrink-0 text-brand" aria-hidden="true" />
+                <CalendarCheck className="mt-0.5 size-4 shrink-0 text-brand-fg" aria-hidden="true" />
                 <span>
                   <span className="font-medium text-slate-900">We lock in your start date.</span>{' '}
                   {next ? <>Next opening: {friendlyDate(next)}.</> : null}

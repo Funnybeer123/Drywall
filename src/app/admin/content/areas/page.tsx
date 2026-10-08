@@ -52,14 +52,14 @@ export default async function AreasAdminPage() {
                 {rows.map((a) => (
                   <tr key={a.id}>
                     <td className="min-w-40">
-                      <Link href={`/admin/content/areas/${a.id}`} className="font-medium text-slate-900 hover:text-brand">
+                      <Link href={`/admin/content/areas/${a.id}`} className="font-medium text-slate-900 hover:text-brand-fg">
                         {a.city}, {a.state}
                       </Link>
                       {a.blurb ? <p className="line-clamp-1 max-w-xs text-xs text-slate-500">{a.blurb}</p> : null}
                     </td>
                     <td>
                       {a.published ? (
-                        <a href={`/areas/${a.slug}`} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 font-mono text-xs text-slate-600 hover:text-brand">
+                        <a href={`/areas/${a.slug}`} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 font-mono text-xs text-slate-600 hover:text-brand-fg">
                           /areas/{a.slug} <ExternalLink className="size-3" />
                         </a>
                       ) : (

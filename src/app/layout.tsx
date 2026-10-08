@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next'
 import { Geist } from 'next/font/google'
 import type { CSSProperties } from 'react'
 import { getSettings, appUrl } from '@/lib/settings'
+import { THEME_SCRIPT } from '@/lib/theme'
 import './globals.css'
 
 const geist = Geist({ subsets: ['latin'], variable: '--font-geist' })
@@ -26,7 +27,11 @@ export const dynamic = 'force-dynamic'
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const s = await getSettings()
   return (
-    <html lang="en" className={geist.variable}>
+    // The theme script adds the `dark` class before hydration, hence suppressHydrationWarning.
+    <html lang="en" className={geist.variable} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
+      </head>
       <body className="min-h-dvh font-sans" style={{ '--brand': s.accentColor } as CSSProperties}>
         {children}
       </body>

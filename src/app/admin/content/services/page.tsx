@@ -44,12 +44,12 @@ export default async function ServicesAdminPage() {
               return (
                 <li key={s.id} className="flex flex-col gap-3 px-5 py-4 sm:flex-row sm:items-center">
                   <div className="flex min-w-0 flex-1 items-start gap-3">
-                    <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-brand-soft text-brand">
+                    <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-brand-soft text-brand-fg">
                       <Icon className="size-5" />
                     </span>
                     <div className="min-w-0">
                       <p className="flex flex-wrap items-center gap-2">
-                        <Link href={`/admin/content/services/${s.id}`} className="font-medium text-slate-900 hover:text-brand">
+                        <Link href={`/admin/content/services/${s.id}`} className="font-medium text-slate-900 hover:text-brand-fg">
                           {s.name}
                         </Link>
                         {s.published ? null : <Badge>Hidden</Badge>}

@@ -1,20 +1,40 @@
 @import 'tailwindcss';
+@import './theme-dark.css';
 
-/* --brand is set at runtime from Settings → accent color (see app/layout.tsx). */
+/* Dark mode is the `dark` class on <html>, set before first paint by the script in app/layout.tsx. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* --brand is set at runtime from Settings → accent color (see app/layout.tsx).
+   --surface is the card/page color: white, or deep slate in dark mode (see theme-dark.css). */
 @theme inline {
   --color-brand: var(--brand, #ea580c);
   --color-brand-dark: color-mix(in oklab, var(--brand, #ea580c) 82%, black);
-  --color-brand-soft: color-mix(in oklab, var(--brand, #ea580c) 10%, white);
+  --color-brand-soft: color-mix(in oklab, var(--brand, #ea580c) var(--brand-soft-mix, 10%), var(--surface));
+  /* Brand as a text color: lifted toward white in dark mode so any accent color stays readable. */
+  --color-brand-fg: color-mix(in oklab, var(--brand, #ea580c) var(--brand-fg-mix, 100%), white);
+  --color-surface: var(--surface);
   --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
 }
 
 :root {
   color-scheme: light;
+  --surface: #fff;
+  --drywall-bg: #f7f5f1;
+  --drywall-wash: url('/hero-wash.svg');
+  --drywall-figure: url('/hero-figure.svg');
+}
+
+@media screen {
+  .dark {
+    --drywall-bg: oklch(20% 0.03 262);
+    --drywall-wash: url('/hero-wash-dark.svg');
+    --drywall-figure: url('/hero-figure-dark.svg');
+  }
 }
 
 body {
-  background: #ffffff;
-  color: #0f172a;
+  background: var(--surface);
+  color: var(--color-slate-900);
   -webkit-font-smoothing: antialiased;
 }
 
@@ -23,7 +43,7 @@ body {
     @apply mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8;
   }
   .eyebrow {
-    @apply text-xs font-semibold tracking-[0.18em] text-brand uppercase;
+    @apply text-xs font-semibold tracking-[0.18em] text-brand-fg uppercase;
   }
   .table-base {
     @apply w-full text-left text-sm;
@@ -41,15 +61,15 @@ body {
      Two layers — the figure (public/hero-figure.svg) and a sweeping skim-coat wash
      (public/hero-wash.svg). Phones get the wash only so text stays easy to read. */
   .bg-drywall {
-    background-color: #f7f5f1;
-    background-image: url('/hero-wash.svg');
+    background-color: var(--drywall-bg);
+    background-image: var(--drywall-wash);
     background-repeat: no-repeat;
     background-size: 100% 100%;
   }
   @media (min-width: 1024px) {
     /* Text-only headers: the figure stands at the right edge of the content area. */
     .bg-drywall {
-      background-image: url('/hero-figure.svg'), url('/hero-wash.svg');
+      background-image: var(--drywall-figure), var(--drywall-wash);
       background-position:
         right max(1rem, calc((100vw - 72rem) / 2)) bottom 0,
         0 0;
@@ -60,14 +80,14 @@ body {
     /* Headers with a photo on the right: the figure moves into the page margin,
        and only appears once the screen is wide enough to fit him beside the photo. */
     .bg-drywall.hero-has-media {
-      background-image: url('/hero-wash.svg');
+      background-image: var(--drywall-wash);
       background-position: 0 0;
       background-size: 100% 100%;
     }
   }
   @media (min-width: 1600px) {
     .bg-drywall.hero-has-media {
-      background-image: url('/hero-figure.svg'), url('/hero-wash.svg');
+      background-image: var(--drywall-figure), var(--drywall-wash);
       background-position:
         right max(0rem, calc((100vw - 72rem) / 2 - 22rem)) bottom 0,
         0 0;

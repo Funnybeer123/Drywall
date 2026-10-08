@@ -101,7 +101,7 @@ export default async function ContentIndexPage() {
           {sections.map(({ href, label, Icon, n, desc }) => (
             <Link key={href} href={href} className="group">
               <Card className="flex h-full items-start gap-3 p-4 transition group-hover:ring-brand">
-                <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-brand-soft text-brand">
+                <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-brand-soft text-brand-fg">
                   <Icon className="size-5" />
                 </span>
                 <div className="min-w-0 flex-1">
@@ -134,7 +134,7 @@ export default async function ContentIndexPage() {
                   <p className="text-xs text-slate-500">{c.detail}</p>
                   {!c.ok ? (
                     c.href ? (
-                      <Link href={c.href} className="mt-1 inline-flex items-center gap-1 text-xs font-semibold text-brand hover:underline">
+                      <Link href={c.href} className="mt-1 inline-flex items-center gap-1 text-xs font-semibold text-brand-fg hover:underline">
                         {c.fix} <ArrowRight className="size-3" />
                       </Link>
                     ) : (

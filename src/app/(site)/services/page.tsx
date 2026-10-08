@@ -33,7 +33,7 @@ export default async function ServicesPage() {
               <a
                 key={sv.id}
                 href={`#${sv.slug}`}
-                className="rounded-full bg-white px-4 py-2 text-sm font-medium text-slate-700 ring-1 ring-slate-200 ring-inset hover:text-slate-900 hover:ring-slate-400"
+                className="rounded-full bg-surface px-4 py-2 text-sm font-medium text-slate-700 ring-1 ring-slate-200 ring-inset hover:text-slate-900 hover:ring-slate-400"
               >
                 {sv.name}
               </a>
@@ -45,7 +45,7 @@ export default async function ServicesPage() {
       <section className="container-x py-16 sm:py-20">
         {services.length === 0 ? (
           <p className="text-slate-600">
-            Service details are coming soon. In the meantime, <Link href="/quote" className="font-semibold text-brand">request a free quote</Link>.
+            Service details are coming soon. In the meantime, <Link href="/quote" className="font-semibold text-brand-fg">request a free quote</Link>.
           </p>
         ) : (
           <div className="divide-y divide-slate-200">
@@ -55,7 +55,7 @@ export default async function ServicesPage() {
                 id={sv.slug}
                 className="grid scroll-mt-24 gap-6 py-12 first:pt-0 last:pb-0 md:grid-cols-[auto_1fr_auto] md:gap-10"
               >
-                <span className="grid size-14 place-items-center rounded-2xl bg-brand-soft text-brand">
+                <span className="grid size-14 place-items-center rounded-2xl bg-brand-soft text-brand-fg">
                   <ServiceIcon name={sv.icon} className="size-7" />
                 </span>
                 <div className="max-w-2xl">

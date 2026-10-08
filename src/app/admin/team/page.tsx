@@ -51,7 +51,7 @@ export default async function TeamPage() {
                   {members.map((u) => (
                     <tr key={u.id} className={u.active ? '' : 'opacity-60'}>
                       <td>
-                        <Link href={`/admin/team/${u.id}`} className="font-medium text-slate-900 hover:text-brand">
+                        <Link href={`/admin/team/${u.id}`} className="font-medium text-slate-900 hover:text-brand-fg">
                           {u.name}
                           {u.id === me.id ? <span className="ml-1 text-xs font-normal text-slate-500">(you)</span> : null}
                         </Link>
@@ -64,7 +64,7 @@ export default async function TeamPage() {
                       <td className="text-right tabular-nums">{u.payRateCents ? formatCents(u.payRateCents) : '—'}</td>
                       <td>{u.active ? <Badge tone="green">Active</Badge> : <Badge>Deactivated</Badge>}</td>
                       <td className="text-right">
-                        <Link href={`/admin/team/${u.id}`} className="text-sm font-medium text-brand hover:underline">
+                        <Link href={`/admin/team/${u.id}`} className="text-sm font-medium text-brand-fg hover:underline">
                           Edit
                         </Link>
                       </td>

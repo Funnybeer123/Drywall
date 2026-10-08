@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import type { ReactNode } from 'react'
 import { getSettings, appUrl } from '@/lib/settings'
+import { ThemeToggle } from '@/components/theme-toggle'
 
 export async function generateMetadata(): Promise<Metadata> {
   const s = await getSettings()
@@ -39,14 +40,17 @@ export default async function HowToPage() {
 
   return (
     <div className="min-h-dvh bg-slate-50">
-      <header className="sticky top-0 z-20 border-b border-slate-200 bg-white/95 backdrop-blur">
+      <header className="sticky top-0 z-20 border-b border-slate-200 bg-surface/95 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
           <Link href="/" className="truncate font-semibold text-slate-900">
             {s.businessName}
           </Link>
-          <Link href="/admin" className="shrink-0 rounded-lg bg-brand px-3.5 py-2 text-sm font-semibold text-white hover:bg-brand-dark">
-            Open dashboard
-          </Link>
+          <div className="flex shrink-0 items-center gap-2">
+            <ThemeToggle className="inline-flex size-9 text-slate-600 hover:bg-slate-100 hover:text-slate-900" />
+            <Link href="/admin" className="shrink-0 rounded-lg bg-brand px-3.5 py-2 text-sm font-semibold text-white hover:bg-brand-dark">
+              Open dashboard
+            </Link>
+          </div>
         </div>
       </header>
 
@@ -57,7 +61,7 @@ export default async function HowToPage() {
             <ul className="space-y-1 text-sm">
               {SECTIONS.map((sec) => (
                 <li key={sec.id}>
-                  <a href={`#${sec.id}`} className="block rounded-md px-2 py-1 text-slate-600 hover:bg-white hover:text-brand">
+                  <a href={`#${sec.id}`} className="block rounded-md px-2 py-1 text-slate-600 hover:bg-surface hover:text-brand-fg">
                     {sec.title}
                   </a>
                 </li>
@@ -68,7 +72,7 @@ export default async function HowToPage() {
 
         <article className="min-w-0 space-y-14 text-[17px] leading-relaxed text-slate-700">
           <div>
-            <p className="text-sm font-semibold tracking-wide text-brand uppercase">How-to guide</p>
+            <p className="text-sm font-semibold tracking-wide text-brand-fg uppercase">How-to guide</p>
             <h1 className="mt-2 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">Using the {s.businessName} dashboard</h1>
             <p className="mt-3 text-slate-600">Step-by-step instructions and short videos for every part of the team dashboard.</p>
           </div>
@@ -138,7 +142,7 @@ export default async function HowToPage() {
             <ul className="list-disc space-y-1 pl-6">
               <li>
                 <B>“Email or password is incorrect.”</B> Check for typos and that Caps Lock is off. Still stuck? See{' '}
-                <a href="#help" className="text-brand underline">
+                <a href="#help" className="text-brand-fg underline">
                   Troubleshooting
                 </a>
                 .
@@ -239,7 +243,7 @@ export default async function HowToPage() {
               </li>
               <li>
                 When you’re ready to quote, click <B>Create estimate</B> under <B>Next steps</B>. The dashboard adds them as a customer for you and
-                opens a new estimate with their details filled in. (See <a href="#estimates" className="text-brand underline">Estimates</a>.)
+                opens a new estimate with their details filled in. (See <a href="#estimates" className="text-brand-fg underline">Estimates</a>.)
               </li>
             </Steps>
             <SubHead>What the labels mean</SubHead>
@@ -450,7 +454,7 @@ export default async function HowToPage() {
             </p>
             <p>
               <B>Taking a deposit.</B> In the <B>Job & billing</B> box, click <B>Create invoice from estimate</B> to bill right away (see{' '}
-              <a href="#invoices" className="text-brand underline">
+              <a href="#invoices" className="text-brand-fg underline">
                 Invoices
               </a>{' '}
               for deposits).
@@ -517,7 +521,7 @@ export default async function HowToPage() {
             </p>
             <p>
               <B>To add a receipt to this job.</B> Under <B>Materials & expenses</B>, click <B>Add expense</B> (see{' '}
-              <a href="#expenses" className="text-brand underline">
+              <a href="#expenses" className="text-brand-fg underline">
                 Expenses
               </a>
               ).
@@ -1095,7 +1099,7 @@ function B({ children }: { children: ReactNode }) {
 }
 
 function Steps({ children }: { children: ReactNode }) {
-  return <ol className="list-decimal space-y-2 pl-6 marker:font-semibold marker:text-brand">{children}</ol>
+  return <ol className="list-decimal space-y-2 pl-6 marker:font-semibold marker:text-brand-fg">{children}</ol>
 }
 
 function Tip({ children }: { children: ReactNode }) {
@@ -1109,7 +1113,7 @@ function Tip({ children }: { children: ReactNode }) {
 
 function Video({ name, title }: { name: string; title: string }) {
   return (
-    <figure className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+    <figure className="overflow-hidden rounded-xl border border-slate-200 bg-surface shadow-sm">
       <video
         controls
         playsInline
@@ -1128,7 +1132,7 @@ function Video({ name, title }: { name: string; title: string }) {
 
 function Table({ head, rows, boldFirst }: { head: string[]; rows: string[][]; boldFirst?: boolean }) {
   return (
-    <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white">
+    <div className="overflow-x-auto rounded-xl border border-slate-200 bg-surface">
       <table className={head.length > 2 ? 'w-full min-w-[520px] text-left text-[15px]' : 'w-full text-left text-[15px]'}>
         <thead className="bg-slate-50 text-sm text-slate-600">
           <tr>
@@ -1157,8 +1161,8 @@ function Table({ head, rows, boldFirst }: { head: string[]; rows: string[][]; bo
 
 function Faq({ q, children }: { q: string; children: ReactNode }) {
   return (
-    <details className="group rounded-xl border border-slate-200 bg-white px-4 py-3">
-      <summary className="cursor-pointer font-semibold text-slate-900 marker:text-brand">{q}</summary>
+    <details className="group rounded-xl border border-slate-200 bg-surface px-4 py-3">
+      <summary className="cursor-pointer font-semibold text-slate-900 marker:text-brand-fg">{q}</summary>
       <div className="mt-2">{children}</div>
     </details>
   )

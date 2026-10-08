@@ -108,12 +108,12 @@ export default async function EstimatesPage({ searchParams }: { searchParams: Pr
                     <tr key={r.id}>
                       <td className="text-slate-500">E-{r.id}</td>
                       <td>
-                        <Link href={`/admin/estimates/${r.id}`} className="font-medium text-slate-900 hover:text-brand">
+                        <Link href={`/admin/estimates/${r.id}`} className="font-medium text-slate-900 hover:text-brand-fg">
                           {r.title}
                         </Link>
                       </td>
                       <td>
-                        <Link href={`/admin/customers/${r.customerId}`} className="text-slate-700 hover:text-brand">
+                        <Link href={`/admin/customers/${r.customerId}`} className="text-slate-700 hover:text-brand-fg">
                           {r.customerName}
                         </Link>
                       </td>

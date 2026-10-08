@@ -96,7 +96,7 @@ export default async function InvoicesPage({ searchParams }: { searchParams: Pro
             aria-current={tab === t.key ? 'page' : undefined}
             className={cn(
               'rounded-md px-3 py-1.5 text-sm font-medium whitespace-nowrap',
-              tab === t.key ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-600 hover:text-slate-900',
+              tab === t.key ? 'bg-surface text-slate-900 shadow-sm dark:bg-slate-200' : 'text-slate-600 hover:text-slate-900',
             )}
           >
             {t.label}
@@ -133,7 +133,7 @@ export default async function InvoicesPage({ searchParams }: { searchParams: Pro
                   return (
                     <tr key={inv.id}>
                       <td className="font-medium">
-                        <Link href={`/admin/invoices/${inv.id}`} className="text-brand hover:underline">
+                        <Link href={`/admin/invoices/${inv.id}`} className="text-brand-fg hover:underline">
                           {inv.number}
                         </Link>
                         {inv.kind !== 'standard' ? <span className="block text-xs text-slate-500">{INVOICE_KIND_LABELS[inv.kind]}</span> : null}

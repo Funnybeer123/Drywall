@@ -144,7 +144,7 @@ export default async function CustomerPage({ params }: { params: Promise<{ id: s
                         return (
                           <tr key={i.id}>
                             <td>
-                              <Link href={`/admin/invoices/${i.id}`} className="font-medium hover:text-brand">
+                              <Link href={`/admin/invoices/${i.id}`} className="font-medium hover:text-brand-fg">
                                 {i.number}
                               </Link>
                             </td>

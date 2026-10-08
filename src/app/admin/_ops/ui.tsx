@@ -29,7 +29,7 @@ export function FilterTabs({ tabs }: { tabs: { label: string; href: string; acti
             href={t.href}
             className={cn(
               'inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium whitespace-nowrap transition-colors',
-              t.active ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-600 hover:text-slate-900',
+              t.active ? 'bg-surface text-slate-900 shadow-sm dark:bg-slate-200' : 'text-slate-600 hover:text-slate-900',
             )}
           >
             {t.label}
@@ -88,7 +88,7 @@ export function ContactLinks({
 export function PhoneLink({ phone }: { phone: string | null | undefined }) {
   if (!phone) return <span className="text-slate-400">—</span>
   return (
-    <a href={telHref(phone)} className="whitespace-nowrap text-slate-700 hover:text-brand">
+    <a href={telHref(phone)} className="whitespace-nowrap text-slate-700 hover:text-brand-fg">
       {formatPhone(phone)}
     </a>
   )
@@ -139,4 +139,4 @@ const JOB_COLORS = [
 export function jobColor(id: number): string {
   return JOB_COLORS[id % JOB_COLORS.length]
 }
-export const BLOCK_COLOR = 'bg-slate-200 text-slate-700 ring-slate-300 bg-[repeating-linear-gradient(135deg,transparent,transparent_6px,rgb(255_255_255/0.5)_6px,rgb(255_255_255/0.5)_12px)]'
+export const BLOCK_COLOR = 'bg-slate-200 text-slate-700 ring-slate-300 bg-[repeating-linear-gradient(135deg,transparent,transparent_6px,color-mix(in_oklab,var(--surface)_50%,transparent)_6px,color-mix(in_oklab,var(--surface)_50%,transparent)_12px)]'

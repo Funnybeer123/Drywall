@@ -4,6 +4,7 @@ import type { Settings } from '@/db/schema'
 import { buttonClass } from '@/components/ui'
 import { formatPhone, smsHref, telHref } from '@/lib/utils'
 import { parseWorkDays } from '@/lib/availability'
+import { ThemeToggle } from '@/components/theme-toggle'
 import { DesktopNav, MobileNav } from './nav'
 import { NAV_LINKS } from './nav-links'
 import { FacebookIcon, GoogleIcon, InstagramIcon } from './icons'
@@ -18,7 +19,7 @@ export function Brand({ s }: { s: Settings }) {
       ) : (
         <span
           aria-hidden="true"
-          className="grid size-9 shrink-0 place-items-center rounded-lg bg-slate-900 text-base font-bold text-white"
+          className="grid size-9 shrink-0 place-items-center rounded-lg bg-slate-900 text-base font-bold text-surface"
         >
           {s.businessName.trim().charAt(0).toUpperCase()}
         </span>
@@ -31,22 +32,23 @@ export function Brand({ s }: { s: Settings }) {
 export function SiteHeader({ s }: { s: Settings }) {
   const phone = formatPhone(s.phone)
   return (
-    <header className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/90 backdrop-blur supports-[backdrop-filter]:bg-white/80">
+    <header className="sticky top-0 z-50 border-b border-slate-200/80 bg-surface/90 backdrop-blur supports-[backdrop-filter]:bg-surface/80">
       <div className="container-x flex h-16 items-center justify-between gap-3">
         <Brand s={s} />
         <DesktopNav />
         <div className="flex shrink-0 items-center gap-2">
+          <ThemeToggle className="hidden size-10 text-slate-600 sm:inline-flex hover:bg-slate-100 hover:text-slate-900" />
           <a
             href={telHref(s.phone)}
-            className="hidden items-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold text-slate-900 hover:bg-slate-100 md:inline-flex"
+            className="hidden items-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold text-slate-900 hover:bg-slate-100 md:inline-flex lg:hidden xl:inline-flex"
           >
-            <Phone className="size-4 text-brand" aria-hidden="true" />
+            <Phone className="size-4 text-brand-fg" aria-hidden="true" />
             {phone}
           </a>
           <a
             href={telHref(s.phone)}
             aria-label={`Call ${phone}`}
-            className="inline-flex size-10 items-center justify-center rounded-lg text-slate-900 ring-1 ring-slate-200 ring-inset hover:bg-slate-50 md:hidden"
+            className="inline-flex size-10 items-center justify-center rounded-lg text-slate-900 ring-1 ring-slate-200 ring-inset hover:bg-slate-50 md:hidden lg:inline-flex xl:hidden"
           >
             <Phone className="size-4" aria-hidden="true" />
           </a>
@@ -81,14 +83,14 @@ export function SiteFooter({ s, areas }: { s: Settings; areas: Area[] }) {
   ].filter(Boolean) as { href: string; label: string; Icon: typeof FacebookIcon }[]
 
   return (
-    <footer className="bg-slate-950 text-slate-300">
+    <footer className="theme-static bg-slate-950 text-slate-300 dark:border-t dark:border-white/10">
       <div className="container-x grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-12">
         <div className="lg:col-span-4">
           <p className="text-lg font-bold text-white">{s.businessName}</p>
           <p className="mt-2 max-w-xs text-sm text-slate-400">{s.tagline}</p>
           <ul className="mt-5 space-y-2 text-sm">
             <li>
-              <a href={telHref(s.phone)} className="inline-flex items-center gap-2 font-semibold text-white hover:text-brand">
+              <a href={telHref(s.phone)} className="inline-flex items-center gap-2 font-semibold text-white hover:text-brand-fg">
                 <Phone className="size-4" aria-hidden="true" /> {formatPhone(s.phone)}
               </a>
             </li>
@@ -192,7 +194,7 @@ export function SiteFooter({ s, areas }: { s: Settings; areas: Area[] }) {
 export function MobileCtaBar({ s }: { s: Settings }) {
   const item = 'flex flex-1 flex-col items-center justify-center gap-0.5 py-2 text-xs font-semibold'
   return (
-    <div className="fixed inset-x-0 bottom-0 z-40 border-t border-slate-200 bg-white/95 pb-[env(safe-area-inset-bottom)] backdrop-blur md:hidden">
+    <div className="fixed inset-x-0 bottom-0 z-40 border-t border-slate-200 bg-surface/95 pb-[env(safe-area-inset-bottom)] backdrop-blur md:hidden">
       <div className="flex h-16 items-stretch gap-2 px-3 py-2">
         <a href={telHref(s.phone)} className={`${item} rounded-lg text-slate-900 ring-1 ring-slate-200 ring-inset`}>
           <Phone className="size-5" aria-hidden="true" />

@@ -54,7 +54,7 @@ export default async function PublicInvoicePage({ params, searchParams }: Props)
 
   return (
     <div className="min-h-dvh bg-slate-100 pb-16">
-      <header className="bg-slate-900 text-white" style={{ borderBottom: `4px solid ${s.accentColor}` }}>
+      <header className="theme-static bg-slate-900 text-white" style={{ borderBottom: `4px solid ${s.accentColor}` }}>
         <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-4 py-4 sm:px-6">
           <p className="font-bold">{s.businessName}</p>
           <a href={telHref(s.phone)} className="inline-flex items-center gap-1.5 text-sm text-slate-300 hover:text-white">
@@ -96,7 +96,7 @@ export default async function PublicInvoicePage({ params, searchParams }: Props)
         <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_300px]">
           {/* Pay box first on mobile */}
           <aside className="space-y-4 lg:order-2">
-            <div className="rounded-xl bg-white p-5 shadow-sm ring-1 ring-slate-200">
+            <div className="rounded-xl bg-surface p-5 shadow-sm ring-1 ring-slate-200">
               <p className="text-sm text-slate-500">{isVoid ? 'Invoice' : balance > 0 ? 'Amount due' : 'Balance'}</p>
               <p className="mt-1 text-3xl font-bold tracking-tight text-slate-900 tabular-nums">{formatCents(isVoid ? 0 : balance)}</p>
               {!isVoid && balance > 0 ? (
@@ -126,7 +126,7 @@ export default async function PublicInvoicePage({ params, searchParams }: Props)
             </div>
 
             {!isVoid && balance > 0 ? (
-              <div className="rounded-xl bg-white p-5 text-sm text-slate-600 shadow-sm ring-1 ring-slate-200">
+              <div className="rounded-xl bg-surface p-5 text-sm text-slate-600 shadow-sm ring-1 ring-slate-200">
                 <p className="font-semibold text-slate-900">{stripeReady ? 'Prefer to pay offline?' : 'How to pay'}</p>
                 <p className="mt-1">
                   Pay by check payable to <strong className="text-slate-900">{s.businessName}</strong>
@@ -139,7 +139,7 @@ export default async function PublicInvoicePage({ params, searchParams }: Props)
                 </p>
                 <p className="mt-2">
                   Questions? Call or text{' '}
-                  <a href={telHref(s.phone)} className="font-medium text-brand hover:underline">
+                  <a href={telHref(s.phone)} className="font-medium text-brand-fg hover:underline">
                     {formatPhone(s.phone)}
                   </a>
                   .
@@ -148,7 +148,7 @@ export default async function PublicInvoicePage({ params, searchParams }: Props)
             ) : null}
           </aside>
 
-          <article className="rounded-xl bg-white p-5 shadow-sm ring-1 ring-slate-200 sm:p-10 lg:order-1">
+          <article className="rounded-xl bg-surface p-5 shadow-sm ring-1 ring-slate-200 sm:p-10 lg:order-1">
             <InvoiceDocument settings={s} invoice={invoice} items={items} payments={payments} customer={customer} projectTitle={project?.title} />
           </article>
         </div>

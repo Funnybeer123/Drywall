@@ -63,7 +63,7 @@ export function PhotoInput({
 
   return (
     <div>
-      <label className="flex cursor-pointer items-center justify-center gap-2 rounded-lg border-2 border-dashed border-slate-300 bg-slate-50 px-4 py-5 text-sm font-medium text-slate-600 transition hover:border-brand hover:text-brand">
+      <label className="flex cursor-pointer items-center justify-center gap-2 rounded-lg border-2 border-dashed border-slate-300 bg-slate-50 px-4 py-5 text-sm font-medium text-slate-600 transition hover:border-brand hover:text-brand-fg">
         <ImagePlus className="size-5" />
         {busy ? 'Preparing…' : label}
         <input key={inputKey} type="file" name={name} accept={accept} multiple={multiple} onChange={onChange} className="sr-only" />

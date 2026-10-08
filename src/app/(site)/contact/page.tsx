@@ -46,9 +46,9 @@ export default async function ContactPage() {
             <li key={label}>
               <a
                 href={href}
-                className="group flex h-full flex-col rounded-2xl bg-white p-6 ring-1 ring-slate-200 transition hover:-translate-y-0.5 hover:shadow-lg hover:ring-slate-300"
+                className="group flex h-full flex-col rounded-2xl bg-surface p-6 ring-1 ring-slate-200 transition hover:-translate-y-0.5 hover:shadow-lg hover:ring-slate-300"
               >
-                <span className="grid size-11 place-items-center rounded-xl bg-brand-soft text-brand transition-colors group-hover:bg-brand group-hover:text-white">
+                <span className="grid size-11 place-items-center rounded-xl bg-brand-soft text-brand-fg transition-colors group-hover:bg-brand group-hover:text-white">
                   <Icon className="size-5" aria-hidden="true" />
                 </span>
                 <span className="mt-4 text-sm font-medium text-slate-500">{label}</span>
@@ -62,7 +62,7 @@ export default async function ContactPage() {
         <div className="mt-12 grid gap-6 lg:grid-cols-2">
           <div className="rounded-2xl bg-slate-50 p-6 ring-1 ring-slate-200 sm:p-8">
             <h2 className="flex items-center gap-2 text-lg font-semibold text-slate-900">
-              <CalendarDays className="size-5 text-brand" aria-hidden="true" /> Hours & scheduling
+              <CalendarDays className="size-5 text-brand-fg" aria-hidden="true" /> Hours & scheduling
             </h2>
             <dl className="mt-4 space-y-3 text-sm">
               <div className="flex justify-between gap-4 border-b border-slate-200 pb-3">
@@ -78,14 +78,14 @@ export default async function ContactPage() {
                 <dd className="font-medium text-slate-900">Within 1 business day</dd>
               </div>
             </dl>
-            <Link href="/availability" className="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-brand">
+            <Link href="/availability" className="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-brand-fg">
               See the availability calendar <ArrowRight className="size-4" aria-hidden="true" />
             </Link>
           </div>
 
           <div className="rounded-2xl bg-slate-50 p-6 ring-1 ring-slate-200 sm:p-8">
             <h2 className="flex items-center gap-2 text-lg font-semibold text-slate-900">
-              <MapPin className="size-5 text-brand" aria-hidden="true" /> Where we work
+              <MapPin className="size-5 text-brand-fg" aria-hidden="true" /> Where we work
             </h2>
             <p className="mt-2 text-sm text-slate-600">
               Based in {s.address ? `${s.address}, ` : ''}

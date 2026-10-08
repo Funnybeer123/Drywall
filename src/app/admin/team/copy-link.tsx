@@ -50,7 +50,7 @@ export function CopyLink({ url, compact }: { url: string; compact?: boolean }) {
         onClick={copy}
         className={cn(
           'inline-flex h-10 shrink-0 items-center gap-1.5 rounded-lg px-3 text-sm font-semibold ring-1 ring-inset',
-          copied ? 'bg-emerald-50 text-emerald-700 ring-emerald-200' : 'bg-white text-slate-900 ring-slate-300 hover:bg-slate-50',
+          copied ? 'bg-emerald-50 text-emerald-700 ring-emerald-200' : 'bg-surface text-slate-900 ring-slate-300 hover:bg-slate-50',
         )}
       >
         {copied ? <Check className="size-4" /> : <Copy className="size-4" />}

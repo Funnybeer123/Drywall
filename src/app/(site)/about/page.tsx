@@ -73,19 +73,19 @@ export default async function AboutPage() {
 
           <div className="space-y-4">
             {stats.map((st) => (
-              <div key={st.label} className="rounded-2xl bg-white p-6 ring-1 ring-slate-200">
+              <div key={st.label} className="rounded-2xl bg-surface p-6 ring-1 ring-slate-200">
                 <p className="text-4xl font-bold tracking-tight text-slate-900">{st.value}</p>
                 <p className="mt-1 text-sm text-slate-500">{st.label}</p>
               </div>
             ))}
-            <div className="rounded-2xl bg-slate-900 p-6 text-white">
+            <div className="theme-static rounded-2xl bg-slate-900 p-6 text-white dark:ring-1 dark:ring-white/10">
               <p className="flex items-center gap-2 font-semibold">
                 <ShieldCheck className="size-5 text-emerald-400" aria-hidden="true" />
                 {s.insured ? 'Licensed & insured' : 'Licensed contractor'}
               </p>
               {s.licenseNumber ? <p className="mt-1 text-sm text-slate-400">License #{s.licenseNumber}</p> : null}
               <p className="mt-4 flex items-center gap-2 text-sm text-slate-300">
-                <Award className="size-4 text-brand" aria-hidden="true" /> {s.yearsInBusiness}+ years in the trade
+                <Award className="size-4 text-brand-fg" aria-hidden="true" /> {s.yearsInBusiness}+ years in the trade
               </p>
               {rating.count > 0 ? (
                 <p className="mt-2 flex items-center gap-2 text-sm text-slate-300">
@@ -102,8 +102,8 @@ export default async function AboutPage() {
           <SectionHeading eyebrow="What we stand for" title="The way we work" align="center" />
           <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {VALUES.map(({ Icon, title, body }) => (
-              <li key={title} className="rounded-2xl bg-white p-6 ring-1 ring-slate-200">
-                <span className="grid size-11 place-items-center rounded-xl bg-brand-soft text-brand">
+              <li key={title} className="rounded-2xl bg-surface p-6 ring-1 ring-slate-200">
+                <span className="grid size-11 place-items-center rounded-xl bg-brand-soft text-brand-fg">
                   <Icon className="size-5" aria-hidden="true" />
                 </span>
                 <h3 className="mt-4 font-semibold text-slate-900">{title}</h3>

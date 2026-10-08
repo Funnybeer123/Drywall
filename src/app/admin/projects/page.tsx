@@ -133,14 +133,14 @@ export default async function ProjectsPage({ searchParams }: { searchParams: Pro
                   {rows.map((r) => (
                     <tr key={r.id}>
                       <td>
-                        <Link href={`/admin/projects/${r.id}`} className="font-medium text-slate-900 hover:text-brand">
+                        <Link href={`/admin/projects/${r.id}`} className="font-medium text-slate-900 hover:text-brand-fg">
                           {r.title}
                         </Link>
                         {r.city ? <p className="text-xs text-slate-500">{r.city}</p> : null}
                       </td>
                       <td>
                         {showMoney ? (
-                          <Link href={`/admin/customers/${r.customerId}`} className="text-slate-700 hover:text-brand">
+                          <Link href={`/admin/customers/${r.customerId}`} className="text-slate-700 hover:text-brand-fg">
                             {r.customerName}
                           </Link>
                         ) : (

@@ -14,7 +14,7 @@ function Section({ step, title, description, children }: { step: number; title: 
   return (
     <fieldset className="border-t border-slate-100 pt-8 first:border-0 first:pt-0">
       <legend className="flex items-center gap-3 text-base font-semibold text-slate-900">
-        <span className="grid size-7 place-items-center rounded-full bg-slate-900 text-xs font-bold text-white">{step}</span>
+        <span className="grid size-7 place-items-center rounded-full bg-slate-900 text-xs font-bold text-surface">{step}</span>
         {title}
       </legend>
       {description ? <p className="mt-1 pl-10 text-sm text-slate-500">{description}</p> : null}

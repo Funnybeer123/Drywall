@@ -64,7 +64,7 @@ export function MonthGrid({
   ]
 
   return (
-    <div className="rounded-2xl bg-white p-4 shadow-sm ring-1 ring-slate-200 sm:p-5">
+    <div className="rounded-2xl bg-surface p-4 shadow-sm ring-1 ring-slate-200 sm:p-5">
       <h3 className="mb-4 text-base font-semibold text-slate-900">{formatMonth(first)}</h3>
       <div className="grid grid-cols-7 gap-1 sm:gap-1.5">
         {WEEKDAYS.map((short, i) => (

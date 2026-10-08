@@ -59,7 +59,7 @@ export function MonthlyChart({ months }: { months: MonthRow[] }) {
                   <div className="w-full max-w-4 rounded-t-[4px]" style={{ height: pct(d.costCents), background: COSTS }} />
                   <div
                     aria-hidden
-                    className={`pointer-events-none absolute bottom-full z-10 mb-1 hidden w-44 rounded-lg ${i < 3 ? 'left-0' : i > 8 ? 'right-0' : 'left-1/2 -translate-x-1/2'} bg-slate-900 p-2.5 text-xs text-white shadow-lg group-hover:block group-focus-visible:block`}
+                    className={`pointer-events-none absolute bottom-full z-10 mb-1 hidden w-44 rounded-lg ${i < 3 ? 'left-0' : i > 8 ? 'right-0' : 'left-1/2 -translate-x-1/2'} bg-slate-900 p-2.5 text-xs text-surface shadow-lg group-hover:block group-focus-visible:block`}
                   >
                     <p className="mb-1 font-semibold">{fmtLong.format(d.date)}</p>
                     <p className="flex justify-between gap-2">
@@ -74,7 +74,7 @@ export function MonthlyChart({ months }: { months: MonthRow[] }) {
                       </span>
                       <span className="tabular-nums">{formatCents(d.costCents)}</span>
                     </p>
-                    <p className="mt-1 flex justify-between gap-2 border-t border-white/20 pt-1 font-semibold">
+                    <p className="mt-1 flex justify-between gap-2 border-t border-current/20 pt-1 font-semibold">
                       <span>Net</span>
                       <span className="tabular-nums">{formatCents(d.revenueCents - d.costCents)}</span>
                     </p>

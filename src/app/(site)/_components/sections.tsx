@@ -72,7 +72,7 @@ export type TestimonialLike = {
 
 export function TestimonialCard({ t, className }: { t: TestimonialLike; className?: string }) {
   return (
-    <figure className={cn('flex h-full flex-col rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200 sm:p-7', className)}>
+    <figure className={cn('flex h-full flex-col rounded-2xl bg-surface p-6 shadow-sm ring-1 ring-slate-200 sm:p-7', className)}>
       <div className="flex items-center justify-between">
         <Stars rating={Math.min(5, Math.max(1, t.rating))} className="text-lg" />
         <Quote className="size-6 text-slate-200" aria-hidden="true" />
@@ -97,10 +97,10 @@ export function ProcessSteps() {
   return (
     <ol className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
       {STEPS.map(({ Icon, title, body }, i) => (
-        <li key={title} className="relative rounded-2xl bg-white p-6 ring-1 ring-slate-200">
+        <li key={title} className="relative rounded-2xl bg-surface p-6 ring-1 ring-slate-200">
           <div className="flex items-center gap-3">
-            <span className="grid size-10 place-items-center rounded-full bg-slate-900 text-sm font-bold text-white">{i + 1}</span>
-            <Icon className="size-5 text-brand" aria-hidden="true" />
+            <span className="grid size-10 place-items-center rounded-full bg-slate-900 text-sm font-bold text-surface">{i + 1}</span>
+            <Icon className="size-5 text-brand-fg" aria-hidden="true" />
           </div>
           <h3 className="mt-5 text-lg font-semibold text-slate-900">{title}</h3>
           <p className="mt-2 text-sm leading-relaxed text-slate-600">{body}</p>
@@ -121,11 +121,11 @@ export function AreaChips({ areas, current }: { areas: { slug: string; city: str
             className={cn(
               'inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-medium ring-1 transition-colors ring-inset',
               current === a.slug
-                ? 'bg-slate-900 text-white ring-slate-900'
-                : 'bg-white text-slate-700 ring-slate-200 hover:text-slate-900 hover:ring-slate-400',
+                ? 'bg-slate-900 text-surface ring-slate-900'
+                : 'bg-surface text-slate-700 ring-slate-200 hover:text-slate-900 hover:ring-slate-400',
             )}
           >
-            <MapPin className="size-3.5 text-brand" aria-hidden="true" />
+            <MapPin className="size-3.5 text-brand-fg" aria-hidden="true" />
             {a.city}, {a.state}
           </Link>
         </li>
@@ -146,7 +146,7 @@ export function CtaBand({
 }) {
   return (
     <section className="container-x py-16 sm:py-20">
-      <div className="relative overflow-hidden rounded-3xl bg-slate-900 px-6 py-12 sm:px-12 sm:py-16">
+      <div className="theme-static relative overflow-hidden rounded-3xl bg-slate-900 dark:ring-1 dark:ring-white/10 px-6 py-12 sm:px-12 sm:py-16">
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 opacity-[0.07]"

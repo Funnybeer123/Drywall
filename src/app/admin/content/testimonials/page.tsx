@@ -75,7 +75,7 @@ export default async function TestimonialsAdminPage() {
                 {rows.map((t) => (
                   <tr key={t.id}>
                     <td className="min-w-40">
-                      <Link href={`/admin/content/testimonials/${t.id}`} className="font-medium text-slate-900 hover:text-brand">
+                      <Link href={`/admin/content/testimonials/${t.id}`} className="font-medium text-slate-900 hover:text-brand-fg">
                         {t.customerName}
                       </Link>
                       <div className="text-xs text-slate-500">{[t.location, t.projectType].filter(Boolean).join(' · ')}</div>

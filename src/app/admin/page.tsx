@@ -196,7 +196,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
             <CardHeader
               title="New leads"
               action={
-                <Link href="/admin/leads" className="text-sm font-medium text-brand hover:underline">
+                <Link href="/admin/leads" className="text-sm font-medium text-brand-fg hover:underline">
                   All leads
                 </Link>
               }
@@ -231,7 +231,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
             <CardHeader
               title="Recent payments"
               action={
-                <Link href="/admin/invoices" className="text-sm font-medium text-brand hover:underline">
+                <Link href="/admin/invoices" className="text-sm font-medium text-brand-fg hover:underline">
                   Invoices
                 </Link>
               }
@@ -266,7 +266,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
               <p className="text-sm text-slate-500">
                 {isOwner ? `${formatCents(pendingEst.total)} in sent estimates` : 'Sent and waiting on the customer'}
               </p>
-              <Link href="/admin/estimates?status=sent" className="mt-3 inline-block text-sm font-medium text-brand hover:underline">
+              <Link href="/admin/estimates?status=sent" className="mt-3 inline-block text-sm font-medium text-brand-fg hover:underline">
                 Review estimates →
               </Link>
             </div>
@@ -321,7 +321,7 @@ function JobListCard({ title, jobs, empty, showCustomer }: { title: string; jobs
       <CardHeader
         title={title}
         action={
-          <Link href="/admin/schedule" className="text-sm font-medium text-brand hover:underline">
+          <Link href="/admin/schedule" className="text-sm font-medium text-brand-fg hover:underline">
             Schedule
           </Link>
         }
@@ -333,7 +333,7 @@ function JobListCard({ title, jobs, empty, showCustomer }: { title: string; jobs
             return (
               <li key={j.id} className="flex items-start justify-between gap-3 px-5 py-3">
                 <div className="min-w-0">
-                  <Link href={`/admin/projects/${j.id}`} className="block truncate font-medium text-slate-900 hover:text-brand">
+                  <Link href={`/admin/projects/${j.id}`} className="block truncate font-medium text-slate-900 hover:text-brand-fg">
                     {j.title}
                   </Link>
                   <p className="text-sm text-slate-500">
@@ -342,7 +342,7 @@ function JobListCard({ title, jobs, empty, showCustomer }: { title: string; jobs
                     {showCustomer ? ` · ${j.customerName}` : ''}
                   </p>
                   {map ? (
-                    <a href={map} target="_blank" rel="noopener noreferrer" className="text-sm text-slate-500 underline-offset-2 hover:text-brand hover:underline">
+                    <a href={map} target="_blank" rel="noopener noreferrer" className="text-sm text-slate-500 underline-offset-2 hover:text-brand-fg hover:underline">
                       {[j.address, j.city].filter(Boolean).join(', ')}
                     </a>
                   ) : null}

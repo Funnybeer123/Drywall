@@ -34,7 +34,7 @@ export default async function NewEstimatePage({ searchParams }: { searchParams: 
         {list.length === 0 ? (
           <p className="text-sm text-slate-600">
             Add a customer first.{' '}
-            <Link href="/admin/customers/new" className="font-medium text-brand underline">
+            <Link href="/admin/customers/new" className="font-medium text-brand-fg underline">
               New customer
             </Link>
           </p>
@@ -47,7 +47,7 @@ export default async function NewEstimatePage({ searchParams }: { searchParams: 
               hint={
                 <>
                   Not listed?{' '}
-                  <Link href="/admin/customers/new" className="text-brand underline">
+                  <Link href="/admin/customers/new" className="text-brand-fg underline">
                     Add a customer
                   </Link>
                 </>

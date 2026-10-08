@@ -137,7 +137,7 @@ export default async function ExpensesPage({ searchParams }: { searchParams: Pro
                         <p className="font-medium text-slate-900">
                           {e.vendor || EXPENSE_CATEGORY_LABELS[e.category]}
                           {e.receiptUrl ? (
-                            <a href={e.receiptUrl} target="_blank" rel="noopener" className="ml-1.5 inline-flex align-middle text-slate-400 hover:text-brand" title="View receipt">
+                            <a href={e.receiptUrl} target="_blank" rel="noopener" className="ml-1.5 inline-flex align-middle text-slate-400 hover:text-brand-fg" title="View receipt">
                               <Paperclip className="size-3.5" />
                               <span className="sr-only">View receipt</span>
                             </a>
@@ -162,7 +162,7 @@ export default async function ExpensesPage({ searchParams }: { searchParams: Pro
                       <td className="text-right font-medium whitespace-nowrap tabular-nums">{formatCents(e.amountCents)}</td>
                       <td>
                         {canEditExpense(user, e) ? (
-                          <Link href={`/admin/expenses/${e.id}/edit`} className="text-sm text-brand hover:underline">
+                          <Link href={`/admin/expenses/${e.id}/edit`} className="text-sm text-brand-fg hover:underline">
                             Edit
                           </Link>
                         ) : null}

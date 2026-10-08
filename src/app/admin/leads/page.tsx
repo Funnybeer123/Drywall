@@ -117,7 +117,7 @@ export default async function LeadsPage({ searchParams }: { searchParams: Search
                   {rows.map((l) => (
                     <tr key={l.id}>
                       <td>
-                        <Link href={`/admin/leads/${l.id}`} className="font-medium text-slate-900 hover:text-brand">
+                        <Link href={`/admin/leads/${l.id}`} className="font-medium text-slate-900 hover:text-brand-fg">
                           {l.name}
                         </Link>
                         {l.city ? <p className="text-xs text-slate-500">{l.city}</p> : null}

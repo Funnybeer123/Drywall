@@ -57,14 +57,14 @@ export default async function EstimatePage({ params }: { params: Promise<{ id: s
         description={
           <>
             For{' '}
-            <Link href={`/admin/customers/${customer.id}`} className="font-medium text-slate-700 hover:text-brand">
+            <Link href={`/admin/customers/${customer.id}`} className="font-medium text-slate-700 hover:text-brand-fg">
               {customer.name}
             </Link>
             {lead ? (
               <>
                 {' '}
                 · from lead{' '}
-                <Link href={`/admin/leads/${lead.id}`} className="font-medium text-slate-700 hover:text-brand">
+                <Link href={`/admin/leads/${lead.id}`} className="font-medium text-slate-700 hover:text-brand-fg">
                   {lead.name}
                 </Link>
               </>

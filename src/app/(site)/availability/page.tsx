@@ -47,7 +47,7 @@ export default async function AvailabilityPage() {
 
       <section className="container-x py-12 sm:py-16">
         <div className="mb-10 grid gap-4 lg:grid-cols-[1fr_auto] lg:items-center">
-          <div className="flex items-start gap-4 rounded-2xl bg-slate-900 p-6 text-white sm:items-center sm:p-7">
+          <div className="flex items-start gap-4 theme-static rounded-2xl bg-slate-900 p-6 text-white dark:ring-1 dark:ring-white/10 sm:items-center sm:p-7">
             <span className="grid size-12 shrink-0 place-items-center rounded-xl bg-brand text-white">
               <CalendarCheck className="size-6" aria-hidden="true" />
             </span>

@@ -10,7 +10,7 @@ export default async function NotFound() {
   const s = await getSettings()
   return (
     <div className="flex min-h-dvh flex-col">
-      <header className="border-b border-slate-200 bg-white">
+      <header className="border-b border-slate-200 bg-surface">
         <div className="container-x flex h-16 items-center">
           <Brand s={s} />
         </div>

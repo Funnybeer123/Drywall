@@ -16,7 +16,7 @@ export function ColorField({ name, defaultValue }: { name: string; defaultValue:
         type="color"
         value={swatch}
         onChange={(e) => setValue(e.target.value)}
-        className="h-10 w-14 cursor-pointer rounded-lg border-0 bg-white p-1 ring-1 ring-slate-300 ring-inset"
+        className="h-10 w-14 cursor-pointer rounded-lg border-0 bg-surface p-1 ring-1 ring-slate-300 ring-inset"
         aria-label="Pick accent color"
       />
       <input
@@ -28,7 +28,7 @@ export function ColorField({ name, defaultValue }: { name: string; defaultValue:
         }}
         maxLength={7}
         spellCheck={false}
-        className={`block h-10 w-32 rounded-lg border-0 bg-white px-3 font-mono text-sm shadow-sm ring-1 ring-inset focus:ring-2 focus:outline-none ${
+        className={`block h-10 w-32 rounded-lg border-0 bg-surface px-3 font-mono text-sm shadow-sm ring-1 ring-inset focus:ring-2 focus:outline-none ${
           valid ? 'ring-slate-300 focus:ring-brand' : 'ring-red-400 focus:ring-red-500'
         }`}
         aria-label="Accent color hex code"

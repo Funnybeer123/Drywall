@@ -75,7 +75,7 @@ export function ExpenseFields({
         <p className="mb-1.5 text-sm font-medium text-slate-700">Receipt</p>
         {defaults.receiptUrl ? (
           <div className="mb-3 flex flex-wrap items-center gap-3 text-sm">
-            <a href={defaults.receiptUrl} target="_blank" rel="noopener" className="text-brand hover:underline">
+            <a href={defaults.receiptUrl} target="_blank" rel="noopener" className="text-brand-fg hover:underline">
               View current receipt
             </a>
             <Checkbox name="removeReceipt" label="Remove it" />

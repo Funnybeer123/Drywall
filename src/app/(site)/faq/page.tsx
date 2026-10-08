@@ -50,7 +50,7 @@ export default async function FaqPage() {
             ) : (
               faqs.map((f, i) => (
                 <details key={f.id} className="group" open={i === 0}>
-                  <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-5 text-left text-lg font-semibold text-slate-900 hover:text-brand focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand [&::-webkit-details-marker]:hidden">
+                  <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-5 text-left text-lg font-semibold text-slate-900 hover:text-brand-fg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand [&::-webkit-details-marker]:hidden">
                     {f.question}
                     <ChevronDown
                       className="size-5 shrink-0 text-slate-400 transition-transform group-open:rotate-180"
@@ -71,11 +71,11 @@ export default async function FaqPage() {
             <p className="font-semibold text-slate-900">Still have a question?</p>
             <p className="mt-2 text-sm text-slate-600">
               Call or text{' '}
-              <a href={telHref(s.phone)} className="font-semibold text-slate-900 hover:text-brand">
+              <a href={telHref(s.phone)} className="font-semibold text-slate-900 hover:text-brand-fg">
                 {formatPhone(s.phone)}
               </a>{' '}
               or{' '}
-              <Link href="/contact" className="font-semibold text-slate-900 hover:text-brand">
+              <Link href="/contact" className="font-semibold text-slate-900 hover:text-brand-fg">
                 send us a message
               </Link>
               . We’re happy to help, even if it’s just advice.

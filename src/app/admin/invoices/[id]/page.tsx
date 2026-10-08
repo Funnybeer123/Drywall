@@ -205,7 +205,7 @@ export default async function InvoicePage({ params }: Props) {
               <CardHeader title="Customer link" description="Anyone with this link can view and pay this invoice." />
               <div className="space-y-3 p-5">
                 <CopyLink url={publicUrl} />
-                <a href={`/i/${invoice.token}`} target="_blank" rel="noopener" className="inline-flex items-center gap-1 text-sm text-brand hover:underline">
+                <a href={`/i/${invoice.token}`} target="_blank" rel="noopener" className="inline-flex items-center gap-1 text-sm text-brand-fg hover:underline">
                   Preview customer view <ExternalLink className="size-3.5" />
                 </a>
               </div>

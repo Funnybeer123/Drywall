@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 800">
+  <!-- Abstract finisher on drywall stilts, skimming the wall with a wide blade. Dark-mode version of hero-figure.svg. -->
+  <defs>
+    <linearGradient id="trail" x1="1" y1="0" x2="0" y2="0">
+      <stop offset="0" stop-color="#2a3550" stop-opacity=".95"/>
+      <stop offset="1" stop-color="#2a3550" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="floor" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#2b3448" stop-opacity="0"/>
+      <stop offset=".3" stop-color="#2b3448"/>
+      <stop offset=".85" stop-color="#2b3448"/>
+      <stop offset="1" stop-color="#2b3448" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <g transform="translate(-950 -150)">
+    <!-- color fields: a warm sun and two fresh drywall sheets -->
+    <circle cx="1250" cy="380" r="245" fill="#2e2632" opacity=".8"/>
+    <rect x="1060" y="200" width="200" height="740" rx="4" fill="#222c40" opacity=".8"/>
+    <rect x="1264" y="200" width="200" height="740" rx="4" fill="#222c40" opacity=".55"/>
+    <circle cx="1460" cy="860" r="95" fill="#232d42" opacity=".7"/>
+
+    <!-- fresh skim coat trailing off the blade -->
+    <path d="M1152 222 C 1080 200, 1010 192, 950 196 L 950 300 C 1010 300, 1080 312, 1152 340 Z" fill="url(#trail)"/>
+    <path d="M1145 250 C 1080 232, 1010 228, 950 232" fill="none" stroke="#3a4560" stroke-width="2"/>
+    <path d="M1145 312 C 1080 292, 1010 286, 950 288" fill="none" stroke="#3a4560" stroke-width="2" opacity=".7"/>
+
+    <!-- floor -->
+    <rect x="950" y="926" width="560" height="14" rx="7" fill="url(#floor)"/>
+
+    <g stroke-linecap="round" stroke-linejoin="round">
+      <!-- stilts -->
+      <rect x="1240" y="914" width="78" height="12" rx="6" fill="#566176"/>
+      <rect x="1364" y="914" width="78" height="12" rx="6" fill="#566176"/>
+      <path d="M1279 916 L1296 660" stroke="#5d687d" stroke-width="9" fill="none"/>
+      <path d="M1403 916 L1378 660" stroke="#5d687d" stroke-width="9" fill="none"/>
+      <path d="M1288 796 L1393 796" stroke="#4b566b" stroke-width="5" fill="none" opacity=".7"/>
+      <!-- legs, strapped to the stilts -->
+      <path d="M1298 680 L1322 545" stroke="#8693a6" stroke-width="34" fill="none"/>
+      <path d="M1376 680 L1352 545" stroke="#7a879b" stroke-width="34" fill="none"/>
+      <rect x="1282" y="650" width="34" height="14" rx="4" fill="#b47c5f" opacity=".9"/>
+      <rect x="1360" y="650" width="34" height="14" rx="4" fill="#b47c5f" opacity=".9"/>
+      <!-- torso -->
+      <path d="M1306 560 L1372 560 L1366 418 Q1338 400 1300 420 Z" fill="#bb8668"/>
+      <!-- arm holding the mud pan -->
+      <path d="M1360 430 L1388 500 L1412 520" stroke="#bb8668" stroke-width="20" fill="none"/>
+      <path d="M1392 512 L1470 512 L1458 538 L1402 538 Z" fill="#566176"/>
+      <!-- head + cap -->
+      <circle cx="1332" cy="375" r="28" fill="#a98571"/>
+      <path d="M1304 372 A28 28 0 0 1 1360 368 Z" fill="#8693a6"/>
+      <path d="M1306 370 L1282 374" stroke="#8693a6" stroke-width="7" fill="none"/>
+      <!-- reaching arm -->
+      <path d="M1310 428 L1242 372" stroke="#bb8668" stroke-width="22" fill="none"/>
+      <path d="M1242 372 L1182 304" stroke="#a98571" stroke-width="17" fill="none"/>
+      <!-- skimming blade -->
+      <path d="M1182 304 L1158 284" stroke="#8693a6" stroke-width="10" fill="none"/>
+      <path d="M1152 205 L1152 355" stroke="#929eb0" stroke-width="11" fill="none"/>
+    </g>
+  </g>
+</svg>

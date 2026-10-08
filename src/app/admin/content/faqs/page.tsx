@@ -41,7 +41,7 @@ export default async function FaqsAdminPage() {
             {rows.map((f) => (
               <li key={f.id} className="flex flex-col gap-3 px-5 py-4 sm:flex-row sm:items-start">
                 <div className="min-w-0 flex-1">
-                  <Link href={`/admin/content/faqs/${f.id}`} className="font-medium text-slate-900 hover:text-brand">
+                  <Link href={`/admin/content/faqs/${f.id}`} className="font-medium text-slate-900 hover:text-brand-fg">
                     {f.question}
                   </Link>
                   <p className="mt-0.5 line-clamp-2 text-sm text-slate-500">{f.answer}</p>

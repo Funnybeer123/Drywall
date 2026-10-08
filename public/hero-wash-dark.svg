@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 700" preserveAspectRatio="none">
+  <!-- Soft sweeping skim-coat strokes across the whole header. Dark-mode version of hero-wash.svg. -->
+  <defs>
+    <linearGradient id="a" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#2a3550" stop-opacity="0"/>
+      <stop offset=".35" stop-color="#2a3550" stop-opacity=".7"/>
+      <stop offset="1" stop-color="#2a3550" stop-opacity=".9"/>
+    </linearGradient>
+    <linearGradient id="b" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#1f2940" stop-opacity=".9"/>
+      <stop offset=".6" stop-color="#1f2940" stop-opacity=".35"/>
+      <stop offset="1" stop-color="#1f2940" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="glow" cx=".85" cy="0" r=".7">
+      <stop offset="0" stop-color="#3b2b2a" stop-opacity=".7"/>
+      <stop offset="1" stop-color="#3b2b2a" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1600" height="700" fill="url(#glow)"/>
+  <path d="M0 120 C 420 40, 980 50, 1600 150 L 1600 250 C 980 150, 420 150, 0 210 Z" fill="url(#a)"/>
+  <path d="M0 540 C 380 470, 820 480, 1300 560 L 1300 600 C 820 530, 380 530, 0 610 Z" fill="url(#b)"/>
+</svg>

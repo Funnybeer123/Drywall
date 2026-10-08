@@ -26,7 +26,7 @@ export function Turnstile({ siteKey, resetKey }: { siteKey: string; resetKey: nu
 
   const render = useCallback(() => {
     if (!window.turnstile || !el.current || widgetId.current) return
-    widgetId.current = window.turnstile.render(el.current, { sitekey: siteKey, theme: 'light', size: 'flexible' })
+    widgetId.current = window.turnstile.render(el.current, { sitekey: siteKey, theme: document.documentElement.classList.contains('dark') ? 'dark' : 'light', size: 'flexible' })
   }, [siteKey])
 
   useEffect(() => {

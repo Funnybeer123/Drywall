@@ -43,7 +43,7 @@ export default async function PublicEstimatePage({ params }: Props) {
 
   return (
     <div className="min-h-dvh bg-slate-50">
-      <header className="border-b-4 border-brand bg-slate-900 text-white">
+      <header className="theme-static border-b-4 border-brand bg-slate-900 text-white">
         <div className="mx-auto flex max-w-3xl flex-wrap items-center justify-between gap-3 px-4 py-4 sm:px-6">
           <Link href="/" className="text-lg font-bold">
             {s.businessName}
@@ -145,7 +145,7 @@ export default async function PublicEstimatePage({ params }: Props) {
           </Card>
         ) : null}
 
-        <div className="mt-6 rounded-xl bg-white p-5 text-sm text-slate-600 ring-1 ring-slate-200 sm:p-6">
+        <div className="mt-6 rounded-xl bg-surface p-5 text-sm text-slate-600 ring-1 ring-slate-200 sm:p-6">
           <p className="font-medium text-slate-900">Have a question, or want to decline?</p>
           <p className="mt-1">No problem — just reach out and {s.ownerName} will get back to you.</p>
           <div className="mt-3 flex flex-wrap gap-2">

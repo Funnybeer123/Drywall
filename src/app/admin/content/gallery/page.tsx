@@ -47,7 +47,7 @@ export default async function GalleryAdminPage() {
                   <img
                     src={g.beforeImageUrl}
                     alt=""
-                    className="absolute bottom-2 left-2 size-16 rounded-md object-cover shadow ring-2 ring-white"
+                    className="absolute bottom-2 left-2 size-16 rounded-md object-cover shadow ring-2 ring-surface"
                     loading="lazy"
                   />
                 ) : null}
@@ -58,7 +58,7 @@ export default async function GalleryAdminPage() {
                 </div>
               </Link>
               <div className="p-4">
-                <Link href={`/admin/content/gallery/${g.id}`} className="font-medium text-slate-900 hover:text-brand">
+                <Link href={`/admin/content/gallery/${g.id}`} className="font-medium text-slate-900 hover:text-brand-fg">
                   {g.title}
                 </Link>
                 <p className="text-xs text-slate-500">

@@ -134,15 +134,15 @@ export default async function AreaPage({ params }: Props) {
             <p className="mt-5 max-w-2xl text-lg leading-relaxed text-slate-600">{intro[0]}</p>
             <ul className="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-sm font-medium text-slate-700">
               <li className="inline-flex items-center gap-2">
-                <Award className="size-4 text-brand" aria-hidden="true" /> {s.yearsInBusiness}+ years experience
+                <Award className="size-4 text-brand-fg" aria-hidden="true" /> {s.yearsInBusiness}+ years experience
               </li>
               {s.insured ? (
                 <li className="inline-flex items-center gap-2">
-                  <ShieldCheck className="size-4 text-brand" aria-hidden="true" /> Licensed & insured
+                  <ShieldCheck className="size-4 text-brand-fg" aria-hidden="true" /> Licensed & insured
                 </li>
               ) : null}
               <li className="inline-flex items-center gap-2">
-                <CalendarCheck className="size-4 text-brand" aria-hidden="true" /> {next ? `Next opening ${friendlyDate(next)}` : 'Free estimates'}
+                <CalendarCheck className="size-4 text-brand-fg" aria-hidden="true" /> {next ? `Next opening ${friendlyDate(next)}` : 'Free estimates'}
               </li>
             </ul>
             <ContactButtons s={s} className="mt-8" />
@@ -197,8 +197,8 @@ export default async function AreaPage({ params }: Props) {
             <SectionHeading eyebrow="Services" title={`Drywall services in ${city}`} />
             <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {services.map((sv) => (
-                <li key={sv.id} className="rounded-2xl bg-white p-6 ring-1 ring-slate-200">
-                  <span className="grid size-11 place-items-center rounded-xl bg-brand-soft text-brand">
+                <li key={sv.id} className="rounded-2xl bg-surface p-6 ring-1 ring-slate-200">
+                  <span className="grid size-11 place-items-center rounded-xl bg-brand-soft text-brand-fg">
                     <ServiceIcon name={sv.icon} className="size-5" />
                   </span>
                   <h3 className="mt-4 font-semibold text-slate-900">
@@ -207,7 +207,7 @@ export default async function AreaPage({ params }: Props) {
                   <p className="mt-2 text-sm leading-relaxed text-slate-600">{sv.summary}</p>
                   <Link
                     href={`/quote?type=${encodeURIComponent(sv.slug)}`}
-                    className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-brand"
+                    className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-brand-fg"
                   >
                     Get a quote <ArrowRight className="size-4" aria-hidden="true" />
                   </Link>
@@ -224,7 +224,7 @@ export default async function AreaPage({ params }: Props) {
             eyebrow="Reviews"
             title={local.length ? `What ${city} customers say` : 'What our customers say'}
             action={
-              <Link href="/reviews" className="inline-flex items-center gap-1 text-sm font-semibold text-slate-900 hover:text-brand">
+              <Link href="/reviews" className="inline-flex items-center gap-1 text-sm font-semibold text-slate-900 hover:text-brand-fg">
                 All reviews <ArrowRight className="size-4" aria-hidden="true" />
               </Link>
             }

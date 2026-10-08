@@ -31,10 +31,10 @@ export default async function WorkPage() {
           <SectionHeading eyebrow="Before & after" title="Drag to compare" description="Slide the handle to see what each space looked like before we got there." />
           <ul className="grid gap-6 md:grid-cols-2">
             {pairs.slice(0, 4).map((item) => (
-              <li key={item.id} className="overflow-hidden rounded-2xl bg-white ring-1 ring-slate-200">
+              <li key={item.id} className="overflow-hidden rounded-2xl bg-surface ring-1 ring-slate-200">
                 <BeforeAfter before={item.beforeImageUrl!} after={item.imageUrl} alt={item.title} />
                 <div className="p-5">
-                  <p className="text-xs font-semibold tracking-wide text-brand uppercase">{item.category}</p>
+                  <p className="text-xs font-semibold tracking-wide text-brand-fg uppercase">{item.category}</p>
                   <p className="mt-1 text-lg font-semibold text-slate-900">{item.title}</p>
                   {item.description ? <p className="mt-1 text-sm text-slate-600">{item.description}</p> : null}
                 </div>

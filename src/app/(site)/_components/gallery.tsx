@@ -38,8 +38,8 @@ export function Gallery({ items }: { items: GalleryItem[] }) {
                 className={cn(
                   'inline-flex shrink-0 items-center gap-2 rounded-full px-4 py-2 text-sm font-medium ring-1 transition-colors ring-inset',
                   filter === c
-                    ? 'bg-slate-900 text-white ring-slate-900'
-                    : 'bg-white text-slate-700 ring-slate-200 hover:ring-slate-400',
+                    ? 'bg-slate-900 text-surface ring-slate-900'
+                    : 'bg-surface text-slate-700 ring-slate-200 hover:ring-slate-400',
                 )}
               >
                 {c}
@@ -56,9 +56,9 @@ export function Gallery({ items }: { items: GalleryItem[] }) {
             <button
               type="button"
               onClick={() => setOpenIndex(i)}
-              className="group block w-full overflow-hidden rounded-2xl bg-white text-left ring-1 ring-slate-200 transition-shadow hover:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+              className="group block w-full overflow-hidden rounded-2xl bg-surface text-left ring-1 ring-slate-200 transition-shadow hover:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
             >
-              <div className="relative aspect-[4/3] overflow-hidden bg-slate-100">
+              <div className="theme-static relative aspect-[4/3] overflow-hidden bg-slate-100">
                 <img
                   src={item.imageUrl}
                   alt={item.title}
@@ -70,12 +70,12 @@ export function Gallery({ items }: { items: GalleryItem[] }) {
                     Before & after
                   </span>
                 ) : null}
-                <span className="absolute right-3 bottom-3 grid size-9 place-items-center rounded-full bg-white/90 text-slate-900 opacity-0 shadow transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">
+                <span className="absolute right-3 bottom-3 grid size-9 place-items-center rounded-full bg-surface/90 text-slate-900 opacity-0 shadow transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">
                   <Expand className="size-4" aria-hidden="true" />
                 </span>
               </div>
               <div className="p-4">
-                <p className="text-xs font-semibold tracking-wide text-brand uppercase">{item.category}</p>
+                <p className="text-xs font-semibold tracking-wide text-brand-fg uppercase">{item.category}</p>
                 <p className="mt-1 font-semibold text-slate-900">{item.title}</p>
               </div>
             </button>
@@ -134,7 +134,7 @@ function Lightbox({
       role="dialog"
       aria-modal="true"
       aria-label={item.title}
-      className="fixed inset-0 z-[60] flex flex-col bg-slate-950/95 backdrop-blur-sm"
+      className="theme-static fixed inset-0 z-[60] flex flex-col bg-slate-950/95 backdrop-blur-sm"
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose()
       }}
@@ -197,7 +197,7 @@ function Lightbox({
       </div>
 
       <div className="mx-auto w-full max-w-5xl px-4 pt-4 pb-6 text-white sm:px-6">
-        <p className="text-xs font-semibold tracking-wide text-brand uppercase">{item.category}</p>
+        <p className="text-xs font-semibold tracking-wide text-brand-fg uppercase">{item.category}</p>
         <p className="mt-1 text-lg font-semibold">{item.title}</p>
         {item.description ? <p className="mt-1 text-sm text-slate-300">{item.description}</p> : null}
         {item.beforeImageUrl ? <p className="mt-1 text-xs text-slate-400">Drag the handle to compare before and after.</p> : null}

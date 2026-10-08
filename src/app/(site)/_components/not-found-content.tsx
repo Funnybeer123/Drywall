@@ -23,7 +23,7 @@ export function NotFoundContent({ s }: { s: Settings }) {
             Get a free quote <ArrowRight className="size-4" aria-hidden="true" />
           </Link>
         </div>
-        <a href={telHref(s.phone)} className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-slate-700 hover:text-brand">
+        <a href={telHref(s.phone)} className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-slate-700 hover:text-brand-fg">
           <Phone className="size-4" aria-hidden="true" /> Or call {formatPhone(s.phone)}
         </a>
       </div>

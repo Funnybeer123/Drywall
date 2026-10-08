@@ -25,10 +25,10 @@ export default async function QuoteThanksPage() {
           {s.ownerName} will review the details and get back to you within one business day, usually sooner. If you left an
           email, a confirmation is on its way.
         </p>
-        <div className="mt-8 rounded-2xl bg-white px-6 py-5 text-left shadow-sm ring-1 ring-slate-200">
+        <div className="mt-8 rounded-2xl bg-surface px-6 py-5 text-left shadow-sm ring-1 ring-slate-200">
           <p className="text-sm text-slate-500">Need us sooner, or forgot something?</p>
-          <a href={telHref(s.phone)} className="mt-1 inline-flex items-center gap-2 text-lg font-bold text-slate-900 hover:text-brand">
-            <Phone className="size-5 text-brand" aria-hidden="true" /> Call or text {formatPhone(s.phone)}
+          <a href={telHref(s.phone)} className="mt-1 inline-flex items-center gap-2 text-lg font-bold text-slate-900 hover:text-brand-fg">
+            <Phone className="size-5 text-brand-fg" aria-hidden="true" /> Call or text {formatPhone(s.phone)}
           </a>
         </div>
         <div className="mt-10 flex flex-col gap-3 sm:flex-row">

@@ -75,7 +75,7 @@ export default async function ReportsPage({ searchParams }: { searchParams: Prom
                 aria-current={period.key === p.key ? 'page' : undefined}
                 className={cn(
                   'rounded-md px-3 py-1.5 text-sm font-medium whitespace-nowrap',
-                  period.key === p.key ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-600 hover:text-slate-900',
+                  period.key === p.key ? 'bg-surface text-slate-900 shadow-sm dark:bg-slate-200' : 'text-slate-600 hover:text-slate-900',
                 )}
               >
                 {p.label}
@@ -257,7 +257,7 @@ export default async function ReportsPage({ searchParams }: { searchParams: Prom
             title="Accounts receivable aging"
             description={`${formatCents(arTotal)} owed to you right now`}
             action={
-              <Link href="/admin/invoices?status=unpaid" className="text-sm text-brand hover:underline">
+              <Link href="/admin/invoices?status=unpaid" className="text-sm text-brand-fg hover:underline">
                 Unpaid invoices
               </Link>
             }

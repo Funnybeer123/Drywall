@@ -42,7 +42,7 @@ export default async function HomePage() {
   return (
     <>
       {/* ---------- Hero: rotating slow-motion close-ups ---------- */}
-      <section className="relative isolate overflow-hidden border-b border-slate-900 bg-slate-950 text-white">
+      <section className="theme-static relative isolate overflow-hidden border-b border-slate-900 bg-slate-950 text-white">
         <HeroVideo />
         <div className="container-x relative flex min-h-[640px] flex-col justify-center py-20 sm:min-h-[680px] sm:py-24 lg:min-h-[760px] lg:py-28">
           <div className="max-w-2xl">
@@ -105,7 +105,7 @@ export default async function HomePage() {
             title={`Drywall services in ${s.city} and beyond`}
             description="One crew for the whole job — from the first sheet to a paint-ready finish. No subcontracting surprises."
             action={
-              <Link href="/services" className="inline-flex items-center gap-1 text-sm font-semibold text-slate-900 hover:text-brand">
+              <Link href="/services" className="inline-flex items-center gap-1 text-sm font-semibold text-slate-900 hover:text-brand-fg">
                 All services <ArrowRight className="size-4" aria-hidden="true" />
               </Link>
             }
@@ -115,14 +115,14 @@ export default async function HomePage() {
               <li key={sv.id}>
                 <Link
                   href={`/services#${sv.slug}`}
-                  className="group flex h-full flex-col rounded-2xl bg-white p-6 ring-1 ring-slate-200 transition hover:-translate-y-0.5 hover:shadow-lg hover:ring-slate-300 sm:p-7"
+                  className="group flex h-full flex-col rounded-2xl bg-surface p-6 ring-1 ring-slate-200 transition hover:-translate-y-0.5 hover:shadow-lg hover:ring-slate-300 sm:p-7"
                 >
-                  <span className="grid size-12 place-items-center rounded-xl bg-brand-soft text-brand transition-colors group-hover:bg-brand group-hover:text-white">
+                  <span className="grid size-12 place-items-center rounded-xl bg-brand-soft text-brand-fg transition-colors group-hover:bg-brand group-hover:text-white">
                     <ServiceIcon name={sv.icon} className="size-6" />
                   </span>
                   <h3 className="mt-5 text-lg font-semibold text-slate-900">{sv.name}</h3>
                   <p className="mt-2 flex-1 text-sm leading-relaxed text-slate-600">{sv.summary}</p>
-                  <span className="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-brand">
+                  <span className="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-brand-fg">
                     Learn more <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
                   </span>
                 </Link>
@@ -141,14 +141,14 @@ export default async function HomePage() {
               title="See the difference a pro finish makes"
               description="Drag the slider on before & after photos to compare."
               action={
-                <Link href="/work" className="inline-flex items-center gap-1 text-sm font-semibold text-slate-900 hover:text-brand">
+                <Link href="/work" className="inline-flex items-center gap-1 text-sm font-semibold text-slate-900 hover:text-brand-fg">
                   View the full portfolio <ArrowRight className="size-4" aria-hidden="true" />
                 </Link>
               }
             />
             <ul className="grid gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
               {work.map((item) => (
-                <li key={item.id} className="overflow-hidden rounded-2xl bg-white ring-1 ring-slate-200">
+                <li key={item.id} className="overflow-hidden rounded-2xl bg-surface ring-1 ring-slate-200">
                   {item.beforeImageUrl ? (
                     <BeforeAfter before={item.beforeImageUrl} after={item.imageUrl} alt={item.title} />
                   ) : (
@@ -162,7 +162,7 @@ export default async function HomePage() {
                     </Link>
                   )}
                   <div className="p-4">
-                    <p className="text-xs font-semibold tracking-wide text-brand uppercase">{item.category}</p>
+                    <p className="text-xs font-semibold tracking-wide text-brand-fg uppercase">{item.category}</p>
                     <p className="mt-1 font-semibold text-slate-900">{item.title}</p>
                   </div>
                 </li>
@@ -200,7 +200,7 @@ export default async function HomePage() {
                   : 'What our customers say'
               }
               action={
-                <Link href="/reviews" className="inline-flex items-center gap-1 text-sm font-semibold text-slate-900 hover:text-brand">
+                <Link href="/reviews" className="inline-flex items-center gap-1 text-sm font-semibold text-slate-900 hover:text-brand-fg">
                   Read all reviews <ArrowRight className="size-4" aria-hidden="true" />
                 </Link>
               }
@@ -250,7 +250,7 @@ function TrustItem({
 }) {
   const body = (
     <span className="flex items-start gap-3">
-      <span className="mt-0.5 text-brand" aria-hidden="true">
+      <span className="mt-0.5 text-brand-fg" aria-hidden="true">
         {icon}
       </span>
       <span>

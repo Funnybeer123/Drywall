@@ -107,7 +107,7 @@ export default async function CustomersPage({ searchParams }: { searchParams: Pr
                   {rows.map((c) => (
                     <tr key={c.id}>
                       <td>
-                        <Link href={`/admin/customers/${c.id}`} className="font-medium text-slate-900 hover:text-brand">
+                        <Link href={`/admin/customers/${c.id}`} className="font-medium text-slate-900 hover:text-brand-fg">
                           {c.name}
                         </Link>
                         {c.company ? <p className="text-xs text-slate-500">{c.company}</p> : null}
@@ -117,7 +117,7 @@ export default async function CustomersPage({ searchParams }: { searchParams: Pr
                       </td>
                       <td className="max-w-56 truncate">
                         {c.email ? (
-                          <a href={`mailto:${c.email}`} className="text-slate-700 hover:text-brand">
+                          <a href={`mailto:${c.email}`} className="text-slate-700 hover:text-brand-fg">
                             {c.email}
                           </a>
                         ) : (

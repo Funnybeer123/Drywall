@@ -163,7 +163,7 @@ export function HeroVideo() {
   return (
     // No z-index here on purpose: the hero text (rendered after this, `relative`) paints on top,
     // while the clip indicator's own z-index keeps it clickable above the text container.
-    <div ref={root} className="absolute inset-0 overflow-hidden bg-slate-950">
+    <div ref={root} className="theme-static absolute inset-0 overflow-hidden bg-slate-950">
       {CLIPS.map((clip, i) => (
         <video
           key={clip.src}
@@ -218,7 +218,7 @@ export function HeroVideo() {
             >
               <span
                 key={i === active ? `${cycle}` : 'idle'}
-                className={cn('absolute inset-y-0 left-0 rounded-full bg-white', i === active ? 'w-full' : 'w-0')}
+                className={cn('absolute inset-y-0 left-0 rounded-full bg-surface', i === active ? 'w-full' : 'w-0')}
                 style={i === active && running ? { animation: `hero-progress ${SEGMENT_MS}ms linear both` } : undefined}
               />
             </button>

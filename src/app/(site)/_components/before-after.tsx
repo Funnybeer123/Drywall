@@ -61,7 +61,7 @@ export function BeforeAfter({
     <div
       ref={ref}
       className={cn(
-        'relative cursor-ew-resize overflow-hidden bg-slate-100 select-none [touch-action:pan-y]',
+        'theme-static relative cursor-ew-resize overflow-hidden bg-slate-100 select-none [touch-action:pan-y]',
         imgClassName,
         className,
       )}
@@ -82,11 +82,11 @@ export function BeforeAfter({
       <span className="pointer-events-none absolute top-3 left-3 rounded-full bg-slate-900/75 px-2.5 py-1 text-[11px] font-semibold tracking-wide text-white uppercase backdrop-blur">
         Before
       </span>
-      <span className="pointer-events-none absolute top-3 right-3 rounded-full bg-white/85 px-2.5 py-1 text-[11px] font-semibold tracking-wide text-slate-900 uppercase backdrop-blur">
+      <span className="pointer-events-none absolute top-3 right-3 rounded-full bg-surface/85 px-2.5 py-1 text-[11px] font-semibold tracking-wide text-slate-900 uppercase backdrop-blur">
         After
       </span>
 
-      <div className="pointer-events-none absolute inset-y-0 w-0.5 -translate-x-1/2 bg-white shadow-[0_0_0_1px_rgb(15_23_42/0.15)]" style={{ left: `${pos}%` }} />
+      <div className="pointer-events-none absolute inset-y-0 w-0.5 -translate-x-1/2 bg-surface shadow-[0_0_0_1px_rgb(15_23_42/0.15)]" style={{ left: `${pos}%` }} />
       <div
         role="slider"
         tabIndex={0}
@@ -96,7 +96,7 @@ export function BeforeAfter({
         aria-valuenow={Math.round(pos)}
         aria-valuetext={`${Math.round(pos)}% before`}
         onKeyDown={onKeyDown}
-        className="absolute top-1/2 grid size-11 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-white text-slate-900 shadow-lg ring-1 ring-slate-900/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+        className="absolute top-1/2 grid size-11 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-surface text-slate-900 shadow-lg ring-1 ring-slate-900/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
         style={{ left: `${pos}%` }}
       >
         <MoveHorizontal className="size-5" aria-hidden="true" />

@@ -41,7 +41,7 @@ export default async function ReviewsPage() {
             <p className="font-semibold text-slate-900">Reviews are coming soon.</p>
             <p className="mt-1 text-slate-600">
               Worked with us? We’d love to hear how it went.{' '}
-              <Link href="/contact" className="font-semibold text-brand">
+              <Link href="/contact" className="font-semibold text-brand-fg">
                 Get in touch
               </Link>
               .
@@ -50,7 +50,7 @@ export default async function ReviewsPage() {
         ) : (
           <div className="grid gap-10 lg:grid-cols-[300px_1fr] lg:gap-12">
             <aside className="lg:sticky lg:top-24 lg:self-start">
-              <div className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+              <div className="rounded-2xl bg-surface p-6 shadow-sm ring-1 ring-slate-200">
                 <p className="text-sm font-medium text-slate-500">Average rating</p>
                 <div className="mt-2 flex items-end gap-3">
                   <span className="text-5xl font-bold tracking-tight text-slate-900">{rating.average.toFixed(1)}</span>

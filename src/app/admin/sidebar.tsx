@@ -24,6 +24,7 @@ import {
   ExternalLink,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { ThemeToggle } from '@/components/theme-toggle'
 import type { NavItem } from './nav'
 
 const ICONS = {
@@ -88,7 +89,7 @@ export function Sidebar({
                         active ? 'bg-white/10 text-white' : 'text-slate-300 hover:bg-white/5 hover:text-white',
                       )}
                     >
-                      <Icon className={cn('size-4', active && 'text-brand')} />
+                      <Icon className={cn('size-4', active && 'text-brand-fg')} />
                       <span className="flex-1">{item.label}</span>
                       {item.href === '/admin/leads' && newLeads > 0 ? (
                         <span className="rounded-full bg-brand px-1.5 py-0.5 text-[10px] font-bold text-white">{newLeads}</span>
@@ -113,11 +114,14 @@ export function Sidebar({
             <p className="truncate text-sm font-medium text-white">{user.name}</p>
             <p className="text-xs text-slate-400">{user.roleLabel}</p>
           </div>
-          <form action={logout}>
-            <button className="rounded-md p-2 text-slate-400 hover:bg-white/5 hover:text-white" aria-label="Sign out" title="Sign out">
-              <LogOut className="size-4" />
-            </button>
-          </form>
+          <div className="flex items-center">
+            <ThemeToggle className="inline-flex rounded-md p-2 text-slate-400 hover:bg-white/5 hover:text-white" />
+            <form action={logout}>
+              <button className="rounded-md p-2 text-slate-400 hover:bg-white/5 hover:text-white" aria-label="Sign out" title="Sign out">
+                <LogOut className="size-4" />
+              </button>
+            </form>
+          </div>
         </div>
       </div>
     </div>
@@ -126,23 +130,24 @@ export function Sidebar({
   return (
     <>
       {/* Mobile top bar */}
-      <div className="no-print sticky top-0 z-30 flex h-14 items-center gap-3 border-b border-slate-200 bg-white px-4 lg:hidden">
+      <div className="no-print sticky top-0 z-30 flex h-14 items-center gap-3 border-b border-slate-200 bg-surface px-4 lg:hidden">
         <button onClick={() => setOpen(true)} aria-label="Open menu" className="-ml-1 rounded-md p-1.5 text-slate-700 hover:bg-slate-100">
           <Menu className="size-5" />
         </button>
-        <span className="truncate font-semibold">{businessName}</span>
+        <span className="flex-1 truncate font-semibold">{businessName}</span>
+        <ThemeToggle className="inline-flex size-9 text-slate-600 hover:bg-slate-100" />
       </div>
 
       {/* Mobile drawer */}
       {open ? (
         <div className="fixed inset-0 z-40 lg:hidden">
           <div className="absolute inset-0 bg-slate-900/50" onClick={() => setOpen(false)} />
-          <aside className="absolute inset-y-0 left-0 w-72 bg-slate-900">{content}</aside>
+          <aside className="theme-static absolute inset-y-0 left-0 w-72 bg-slate-900">{content}</aside>
         </div>
       ) : null}
 
       {/* Desktop sidebar */}
-      <aside className="no-print fixed inset-y-0 left-0 z-20 hidden w-64 bg-slate-900 lg:block">{content}</aside>
+      <aside className="theme-static no-print fixed inset-y-0 left-0 z-20 hidden w-64 bg-slate-900 lg:block dark:border-r dark:border-white/10">{content}</aside>
     </>
   )
 }

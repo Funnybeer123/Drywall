@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { ArrowRight, Menu, Phone, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { ThemeToggle } from '@/components/theme-toggle'
 
 function isActive(pathname: string, href: string) {
   return pathname === href || pathname.startsWith(href + '/')
@@ -24,7 +25,7 @@ export function DesktopNav() {
             href={l.href}
             aria-current={active ? 'page' : undefined}
             className={cn(
-              'rounded-md px-3 py-2 text-sm font-medium transition-colors',
+              'rounded-md px-3 py-2 text-sm font-medium whitespace-nowrap transition-colors',
               active ? 'text-slate-900' : 'text-slate-600 hover:text-slate-900',
             )}
           >
@@ -68,14 +69,14 @@ export function MobileNav({ phone, phoneHref }: { phone: string; phoneHref: stri
 
       {/* Portaled to <body>: the header's backdrop-filter would otherwise trap `position: fixed`. */}
       {open ? createPortal(
-        <div id="mobile-menu" className="fixed inset-x-0 top-16 bottom-0 z-[45] overflow-y-auto bg-white lg:hidden">
+        <div id="mobile-menu" className="fixed inset-x-0 top-16 bottom-0 z-[45] overflow-y-auto bg-surface lg:hidden">
           <nav aria-label="Mobile" className="container-x flex flex-col py-4">
             <Link
               href="/"
               onClick={() => setOpen(false)}
               className={cn(
                 'flex items-center justify-between border-b border-slate-100 py-4 text-lg font-semibold',
-                pathname === '/' ? 'text-brand' : 'text-slate-900',
+                pathname === '/' ? 'text-brand-fg' : 'text-slate-900',
               )}
             >
               Home
@@ -88,7 +89,7 @@ export function MobileNav({ phone, phoneHref }: { phone: string; phoneHref: stri
                 aria-current={isActive(pathname, l.href) ? 'page' : undefined}
                 className={cn(
                   'flex items-center justify-between border-b border-slate-100 py-4 text-lg font-semibold',
-                  isActive(pathname, l.href) ? 'text-brand' : 'text-slate-900',
+                  isActive(pathname, l.href) ? 'text-brand-fg' : 'text-slate-900',
                 )}
               >
                 {l.label}
@@ -113,10 +114,14 @@ export function MobileNav({ phone, phoneHref }: { phone: string; phoneHref: stri
               </Link>
               <a
                 href={phoneHref}
-                className="inline-flex h-12 items-center justify-center gap-2 rounded-lg bg-white px-6 font-semibold text-slate-900 ring-1 ring-slate-300 ring-inset"
+                className="inline-flex h-12 items-center justify-center gap-2 rounded-lg bg-surface px-6 font-semibold text-slate-900 ring-1 ring-slate-300 ring-inset"
               >
                 <Phone className="size-4" aria-hidden="true" /> Call {phone}
               </a>
+              <ThemeToggle
+                label
+                className="flex h-12 px-6 font-semibold text-slate-700 ring-1 ring-slate-200 ring-inset hover:bg-slate-50 sm:hidden"
+              />
             </div>
           </nav>
         </div>,

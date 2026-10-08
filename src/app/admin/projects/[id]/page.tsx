@@ -88,7 +88,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
         description={
           <>
             {manage ? (
-              <Link href={`/admin/customers/${customer.id}`} className="font-medium text-slate-700 hover:text-brand">
+              <Link href={`/admin/customers/${customer.id}`} className="font-medium text-slate-700 hover:text-brand-fg">
                 {customer.name}
               </Link>
             ) : (
@@ -111,8 +111,8 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
         <div className="min-w-0 space-y-6 lg:col-span-2">
           <Card className="p-5">
             {map ? (
-              <a href={map} target="_blank" rel="noopener noreferrer" className="mb-4 flex items-start gap-2 text-base font-medium text-slate-900 hover:text-brand">
-                <MapPin className="mt-0.5 size-5 shrink-0 text-brand" />
+              <a href={map} target="_blank" rel="noopener noreferrer" className="mb-4 flex items-start gap-2 text-base font-medium text-slate-900 hover:text-brand-fg">
+                <MapPin className="mt-0.5 size-5 shrink-0 text-brand-fg" />
                 <span>{[p.address, p.city].filter(Boolean).join(', ')}</span>
               </a>
             ) : null}
@@ -298,7 +298,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
                               {e.vendor ?? '—'}
                               {e.description ? <p className="text-xs text-slate-500">{e.description}</p> : null}
                               {e.receiptUrl ? (
-                                <a href={e.receiptUrl} target="_blank" rel="noopener noreferrer" className="text-xs text-brand hover:underline">
+                                <a href={e.receiptUrl} target="_blank" rel="noopener noreferrer" className="text-xs text-brand-fg hover:underline">
                                   Receipt
                                 </a>
                               ) : null}
