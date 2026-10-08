@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation'
 import { useState } from 'react'
 import {
   BarChart3,
+  BookOpen,
   Calendar,
   FileText,
   Hammer,
@@ -103,6 +104,9 @@ export function Sidebar({
       <div className="border-t border-white/10 p-3">
         <Link href="/" target="_blank" className="mb-1 flex items-center gap-3 rounded-lg px-2.5 py-2 text-sm text-slate-300 hover:bg-white/5 hover:text-white">
           <ExternalLink className="size-4" /> View website
+        </Link>
+        <Link href="/howto" target="_blank" className="mb-1 flex items-center gap-3 rounded-lg px-2.5 py-2 text-sm text-slate-300 hover:bg-white/5 hover:text-white">
+          <BookOpen className="size-4" /> How-to guide
         </Link>
         <div className="flex items-center justify-between gap-2 px-2.5 py-2">
           <div className="min-w-0">

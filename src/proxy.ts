@@ -2,7 +2,7 @@ import { NextResponse, type NextRequest } from 'next/server'
 
 /**
  * When the site is shared from this PC through a public tunnel (ADMIN_LOCAL_ONLY=true),
- * the team dashboard and login are reachable only from this computer (localhost).
+ * the team dashboard, login and how-to guide are reachable only from this computer (localhost).
  * Everyone else gets the public website and the key-protected API.
  * Leave ADMIN_LOCAL_ONLY unset on a real deployment so the team can sign in from anywhere.
  */
@@ -17,5 +17,5 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/admin/:path*', '/login', '/invite/:path*'],
+  matcher: ['/admin/:path*', '/login', '/invite/:path*', '/howto'],
 }
